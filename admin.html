@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | BM & Asc.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="logo2.png">
+    <style>
+        :root { --primary: #4c0519; --cream: #fdfaf7; }
+        body { font-family: 'Lora', serif; background-color: var(--cream); }
+        .bg-bordo { background-color: var(--primary); }
+    </style>
+</head>
+<body class="p-4 md:p-8 min-h-screen">
+    
+    <!-- Botón Volver (Siempre visible) -->
+    <div class="max-w-5xl mx-auto mb-4">
+        <button onclick="window.history.length > 1 ? window.history.back() : window.location.href='index.html'" class="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest text-stone-500 hover:text-bordo transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Volver
+        </button>
+    </div>
+
+    <!-- Pantalla de Login -->
+    <div id="login-screen" class="max-w-md mx-auto mt-10 md:mt-20 bg-white p-6 md:p-8 shadow-xl border-t-8 border-[#4c0519]">
+        <h2 class="text-xl font-bold text-center mb-6 uppercase tracking-widest text-[#4c0519]">Panel de Gestión</h2>
+        <form id="login-form" class="space-y-4">
+            <input type="email" id="email" placeholder="Correo Electrónico" class="w-full border p-3 outline-none focus:border-[#b45309] rounded-sm" required>
+            <input type="password" id="pass" placeholder="Contraseña" class="w-full border p-3 outline-none focus:border-[#b45309] rounded-sm" required>
+            <button type="submit" class="w-full bg-[#4c0519] text-white py-3 font-bold uppercase tracking-widest text-xs hover:bg-[#700a25] transition-colors rounded-sm">Ingresar</button>
+        </form>
+    </div>
+
+    <!-- Panel de Consultas -->
+    <div id="admin-panel" class="hidden max-w-5xl mx-auto">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 border-b pb-6 gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-[#4c0519] italic">Consultas Recibidas</h1>
+                <p class="text-stone-500 text-[10px] md:text-xs uppercase tracking-widest mt-1">Badaloni Mombelli & Fiori</p>
+            </div>
+            <button id="logoutBtn" class="w-full sm:w-auto text-[10px] text-stone-400 hover:text-red-700 font-bold uppercase border border-stone-200 px-4 py-2 hover:border-red-200 transition-all bg-white rounded-sm">Cerrar Sesión</button>
+        </div>
+        
+        <div id="consultas-container" class="grid gap-4 md:gap-6">
+            <div class="text-center py-10 text-stone-400 italic">Cargando mensajes...</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, query, onSnapshot, doc, updateDoc, deleteDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDgquI-XLQ_8zKkOXvnIPV8Vq_PViWQQ3E",
+            authDomain: "estudiobadalonimombelli.firebaseapp.com",
+            projectId: "estudiobadalonimombelli",
+            storageBucket: "estudiobadalonimombelli.firebasestorage.app",
+            messagingSenderId: "471462295134",
+            appId: "1:471462295134:web:a7a1fd8ffd99097aa2e6cf",
+            measurementId: "G-3G3M0D15PY"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user && !user.isAnonymous) {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+                escucharConsultas();
+            } else {
+                document.getElementById('login-screen').classList.remove('hidden');
+                document.getElementById('admin-panel').classList.add('hidden');
+            }
+        });
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('pass').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+            } catch (err) {
+                alert("Error de acceso: Verifique sus credenciales.");
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+
+        function escucharConsultas() {
+            const q = collection(db, 'consultas');
+            
+            onSnapshot(q, (snap) => {
+                const container = document.getElementById('consultas-container');
+                
+                if (snap.empty) {
+                    container.innerHTML = '<div class="text-center py-20 bg-white border border-dashed border-stone-300 text-stone-400 rounded-sm">No hay consultas registradas aún.</div>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                
+                const docs = [];
+                snap.forEach(d => docs.push({id: d.id, ...d.data()}));
+                docs.sort((a, b) => (b.fecha?.seconds || 0) - (a.fecha?.seconds || 0));
+
+                docs.forEach(data => {
+                    const fechaTxt = data.fecha ? new Date(data.fecha.seconds * 1000).toLocaleString() : 'Fecha pendiente';
+                    const card = document.createElement('div');
+                    card.className = `bg-white p-4 md:p-6 shadow-md border-l-4 md:border-l-8 ${data.leido ? 'border-stone-200 opacity-75' : 'border-[#4c0519]'} transition-all rounded-sm overflow-hidden`;
+                    
+                    card.innerHTML = `
+                        <div class="flex flex-col md:flex-row justify-between mb-4 gap-2">
+                            <div class="overflow-hidden">
+                                <h3 class="font-bold text-base md:text-lg text-stone-800 truncate">${data.nombre}</h3>
+                                <p class="text-xs md:text-sm text-[#b45309] font-semibold break-all">${data.email}</p>
+                            </div>
+                            <span class="text-[9px] md:text-[10px] text-stone-400 uppercase font-bold tracking-widest whitespace-nowrap">${fechaTxt}</span>
+                        </div>
+                        <div class="bg-stone-50 p-3 md:p-4 rounded-sm mb-4 border border-stone-100">
+                            <p class="text-stone-700 italic text-sm leading-relaxed break-words">"${data.mensaje}"</p>
+                        </div>
+                        <div class="flex flex-wrap gap-4 md:gap-6 items-center">
+                            <button onclick="marcarLeido('${data.id}', ${!data.leido})" class="text-[9px] md:text-[10px] font-bold text-[#4c0519] uppercase tracking-tighter hover:underline">
+                                ${data.leido ? 'Marcar Pendiente' : 'Archivar Consulta'}
+                            </button>
+                            <button onclick="eliminarConsulta('${data.id}')" class="text-[9px] md:text-[10px] font-bold text-red-700 uppercase tracking-tighter hover:underline">
+                                Eliminar
+                            </button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }, (error) => {
+                console.error("Error:", error);
+                document.getElementById('consultas-container').innerHTML = `<div class="p-4 bg-red-50 text-red-700 border border-red-200 rounded-sm">Error de permisos.</div>`;
+            });
+        }
+
+        window.marcarLeido = async (id, estado) => {
+            try {
+                await updateDoc(doc(db, 'consultas', id), { leido: estado });
+            } catch (e) { console.error(e); }
+        };
+
+        window.eliminarConsulta = async (id) => {
+            if (confirm("¿Eliminar permanentemente?")) {
+                try {
+                    await deleteDoc(doc(db, 'consultas', id));
+                } catch (e) { console.error(e); }
+            }
+        };
+    </script>
+</body>
+</html>

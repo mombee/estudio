@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Servicio | Badaloni Mombelli & Fiori</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #4c0519; --accent: #b45309; --cream: #fdfaf7; --yellow-text: #fbbf24; }
+        body { font-family: 'Lora', serif; background-color: var(--cream); color: #1a1a1a; min-height: 100vh; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        .bg-bordo { background-color: var(--primary); }
+        .text-bordo { color: var(--primary); }
+        .text-ocre { color: var(--accent); }
+        .text-yellow-custom { color: var(--yellow-text); }
+        .border-ocre { border-color: var(--accent); }
+        
+        /* Renderizado de texto enriquecido */
+        .rich-text strong { font-weight: 700; color: #000; }
+        .rich-text .highlight { color: var(--accent); font-style: italic; font-weight: 600; }
+
+        .btn-float { position: fixed; bottom: 30px; right: 30px; z-index: 50; }
+        .line-clamp-4 { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navegación -->
+    <nav class="bg-white border-b border-ocre/20 py-4 shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-bordo font-bold uppercase tracking-widest flex items-center gap-2 text-xs">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Volver al Inicio
+            </a>
+            <div id="admin-auth-status">
+                <a href="admin.html" class="text-[10px] uppercase font-bold tracking-widest text-stone-400 hover:text-bordo transition-colors">
+                    Acceso Empleados
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Vista de Listado Principal -->
+    <div id="view-list">
+        <header class="bg-bordo text-white py-16 md:py-24">
+            <div class="container mx-auto px-6 text-center">
+                <h1 id="service-title" class="text-4xl md:text-6xl italic mb-4">Cargando servicio...</h1>
+                <p id="service-desc" class="text-ocre text-lg md:text-xl font-light italic">Especialistas en la materia.</p>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-6 py-12">
+            <!-- Sección de Administración -->
+            <section id="admin-section" class="hidden mb-16 bg-white border border-ocre/30 p-8 shadow-lg rounded-sm relative fade-in">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-2xl font-bold text-bordo italic">Nueva Publicación Profesional</h2>
+                    <button id="close-admin" class="text-stone-400 hover:text-red-700 text-xl">&times;</button>
+                </div>
+                <form id="postForm" class="space-y-4">
+                    <input type="text" id="post-title" placeholder="Título de la publicación" class="w-full border border-stone-200 p-3 outline-none focus:border-ocre" required>
+                    <input type="url" id="post-img" placeholder="URL de la imagen (miniatura)" class="w-full border border-stone-200 p-3 outline-none focus:border-ocre" required>
+                    <div class="text-[10px] text-stone-400 uppercase tracking-widest mb-1 italic">Tip: Usa *texto* para negrita y [texto] para resaltar en ocre</div>
+                    <textarea id="post-content" rows="6" placeholder="Contenido informativo para los clientes..." class="w-full border border-stone-200 p-3 outline-none focus:border-ocre" required></textarea>
+                    <div class="flex justify-end pt-2">
+                        <button type="submit" class="bg-bordo text-yellow-custom px-10 py-4 uppercase tracking-[0.2em] font-bold text-xs hover:opacity-90 transition-all shadow-md">
+                            Publicar
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <div class="flex justify-between items-end mb-8 border-b border-stone-200 pb-4">
+                <h2 class="text-3xl font-bold text-stone-800 italic">Actualidad Jurídica</h2>
+                <button id="btn-add-post-main" class="hidden bg-bordo text-white w-10 h-10 flex items-center justify-center rounded-full text-2xl hover:scale-110 transition-transform shadow-lg">+</button>
+            </div>
+
+            <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="animate-pulse col-span-full text-center py-20 text-stone-400">Sincronizando con el archivo del estudio...</div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Vista de Detalle de Publicación -->
+    <div id="view-detail" class="hidden fade-in">
+        <div class="container mx-auto px-6 py-12 max-w-4xl">
+            <button id="btn-back-to-list" class="text-ocre uppercase text-[10px] font-bold tracking-[0.2em] mb-8 flex items-center gap-2 hover:text-bordo transition-colors">
+                &larr; Volver a publicaciones recientes
+            </button>
+            
+            <article id="single-post-content" class="bg-white border border-stone-200 shadow-sm p-8 md:p-12 mb-12">
+                <!-- Dinámico -->
+            </article>
+
+            <section class="bg-stone-50 border border-stone-200 p-8">
+                <h3 class="text-2xl font-bold text-bordo italic mb-6">Comentarios y Consultas</h3>
+                
+                <form id="commentForm" class="mb-10 space-y-4">
+                    <input type="text" id="comment-name" placeholder="Tu nombre completo" class="w-full border border-stone-200 p-4 outline-none focus:border-ocre bg-white shadow-sm" required>
+                    <textarea id="comment-text" rows="3" placeholder="Escribe aquí tu consulta o comentario..." class="w-full border border-stone-200 p-4 outline-none focus:border-ocre bg-white shadow-sm" required></textarea>
+                    
+                    <div class="flex justify-end">
+                        <button type="submit" id="btn-submit-comment" class="bg-bordo text-white px-8 py-4 uppercase tracking-[0.2em] font-bold text-[10px] hover:bg-stone-800 transition-all shadow-md flex items-center gap-3">
+                            Enviar Comentario
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+
+                <div id="comments-container" class="space-y-6">
+                    <!-- Dinámico -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Botón Flotante Admin -->
+    <button id="btn-publish-float" class="hidden btn-float bg-ocre text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 hover:bg-bordo hover:scale-105 transition-all duration-300">
+        <span class="text-xs uppercase font-bold tracking-widest">Nueva Publicación</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+    </button>
+
+    <footer class="bg-stone-100 py-12 text-center border-t border-stone-200 mt-20">
+        <p class="text-stone-500 text-[10px] uppercase tracking-widest">&copy; 2026 Badaloni Mombelli & Fiori . Información de Acceso Público</p>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, where, onSnapshot, serverTimestamp, doc, deleteDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDgquI-XLQ_8zKkOXvnIPV8Vq_PViWQQ3E",
+            authDomain: "estudiobadalonimombelli.firebaseapp.com",
+            projectId: "estudiobadalonimombelli",
+            storageBucket: "estudiobadalonimombelli.firebasestorage.app",
+            messagingSenderId: "471462295134",
+            appId: "1:471462295134:web:a7a1fd8ffd99097aa2e6cf",
+            measurementId: "G-3G3M0D15PY"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        let currentPostId = null;
+        let isAdmin = false;
+
+        const serviciosData = {
+            'familia': { t: 'Derecho de Familia', d: 'Asesoramiento en divorcios, alimentos y responsabilidad parental.' },
+            'sucesiones': { t: 'Sucesiones', d: 'Gestión integral de herencias y declaratorias de herederos.' },
+            'contratos': { t: 'Contratos y Daños', d: 'Estrategias en reclamos civiles y redacción de convenios.' },
+            'amparos': { t: 'Procesos de Amparo', d: 'Acciones judiciales urgentes para la tutela de derechos.' },
+            'salud': { t: 'Derecho de Salud', d: 'Amparos de salud y reclamos contra obras sociales.' },
+            'consorcios': { t: 'Propiedad Horizontal', d: 'Solución de conflictos en edificios y urbanizaciones.' }
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const serviceId = urlParams.get('id') || 'familia';
+        const info = serviciosData[serviceId] || serviciosData.familia;
+
+        document.getElementById('service-title').innerText = info.t;
+        document.getElementById('service-desc').innerText = info.d;
+
+        function formatRichText(text) {
+            if (!text) return "";
+            return text
+                .replace(/\*(.*?)\*/g, '<strong class="font-bold text-black">$1</strong>')
+                .replace(/\[(.*?)\]/g, '<span class="highlight text-ocre italic font-semibold">$1</span>');
+        }
+
+        function showView(viewId) {
+            document.getElementById('view-list').classList.add('hidden');
+            document.getElementById('view-detail').classList.add('hidden');
+            document.getElementById(viewId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        onAuthStateChanged(auth, (user) => {
+            isAdmin = user && !user.isAnonymous;
+            const btnAdd = document.getElementById('btn-add-post-main');
+            const btnFloat = document.getElementById('btn-publish-float');
+            const authStatus = document.getElementById('admin-auth-status');
+            
+            if (isAdmin) {
+                btnAdd?.classList.remove('hidden');
+                btnFloat?.classList.remove('hidden');
+                authStatus.innerHTML = `<span class="text-[10px] uppercase font-bold tracking-widest text-bordo">Panel de Administración</span>`;
+            } else {
+                btnAdd?.classList.add('hidden');
+                btnFloat?.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('btn-add-post-main').onclick = () => document.getElementById('admin-section').classList.toggle('hidden');
+        document.getElementById('btn-publish-float').onclick = () => {
+            document.getElementById('admin-section').classList.remove('hidden');
+            document.getElementById('admin-section').scrollIntoView({behavior: 'smooth'});
+        };
+        document.getElementById('close-admin').onclick = () => document.getElementById('admin-section').classList.add('hidden');
+
+        document.getElementById('postForm').onsubmit = async (e) => {
+            e.preventDefault();
+            if (!isAdmin) return;
+            const btn = e.target.querySelector('button');
+            btn.disabled = true;
+            btn.innerText = "PROCESANDO...";
+
+            try {
+                await addDoc(collection(db, 'publicaciones'), {
+                    serviceId,
+                    titulo: document.getElementById('post-title').value,
+                    imagen: document.getElementById('post-img').value,
+                    contenido: document.getElementById('post-content').value,
+                    fecha: serverTimestamp(),
+                    autor: "Staff Jurídico BMF"
+                });
+                e.target.reset();
+                document.getElementById('admin-section').classList.add('hidden');
+            } catch (err) {
+                alert("Error: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Publicar";
+            }
+        };
+
+        const qPosts = query(collection(db, 'publicaciones'), where("serviceId", "==", serviceId));
+        onSnapshot(qPosts, (snap) => {
+            const container = document.getElementById('posts-container');
+            container.innerHTML = '';
+            if (snap.empty) {
+                container.innerHTML = `<div class="col-span-full py-10 text-stone-400 italic text-center">Sin publicaciones recientes en esta sección.</div>`;
+                return;
+            }
+            snap.forEach((docSnap) => {
+                const post = docSnap.data();
+                const id = docSnap.id;
+                const card = document.createElement('article');
+                card.className = "bg-white border border-stone-200 group overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col relative";
+                card.innerHTML = `
+                    <div class="h-56 overflow-hidden bg-stone-100 cursor-pointer" onclick="openPost('${id}')">
+                        <img src="${post.imagen}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400'">
+                    </div>
+                    ${isAdmin ? `<button onclick="deletePost('${id}')" class="absolute top-2 right-2 bg-red-600 text-white w-8 h-8 rounded-full shadow-md z-10 hover:bg-red-800 transition-colors">&times;</button>` : ''}
+                    <div class="p-6 flex-grow">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[9px] uppercase tracking-widest text-ocre font-bold">${post.autor}</span>
+                            <span class="text-[9px] text-stone-400 font-bold">${post.fecha ? new Date(post.fecha.seconds * 1000).toLocaleDateString() : 'Pendiente'}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-bordo mb-3 leading-tight cursor-pointer hover:text-ocre transition-colors" onclick="openPost('${id}')">${post.titulo}</h3>
+                        <div class="rich-text text-sm text-stone-600 line-clamp-4 leading-relaxed mb-4">
+                            ${formatRichText(post.contenido)}
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <button onclick="openPost('${id}')" class="text-ocre text-[10px] uppercase font-bold tracking-[0.15em] border-b-2 border-ocre/30 pb-1 hover:border-bordo hover:text-bordo transition-all">Leer Publicación Completa</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        });
+
+        window.deletePost = async (id) => {
+            if (confirm("¿Confirmar eliminación de este registro profesional?")) {
+                await deleteDoc(doc(db, 'publicaciones', id));
+            }
+        };
+
+        window.openPost = (id) => {
+            currentPostId = id;
+            onSnapshot(doc(db, 'publicaciones', id), (snap) => {
+                if (!snap.exists()) { showView('view-list'); return; }
+                const post = snap.data();
+                document.getElementById('single-post-content').innerHTML = `
+                    <div class="mb-10 text-center">
+                        <span class="text-[10px] uppercase tracking-[0.3em] text-ocre font-bold">${post.autor} | ${post.fecha ? new Date(post.fecha.seconds * 1000).toLocaleDateString() : ''}</span>
+                        <h1 class="text-4xl md:text-5xl font-bold text-bordo italic mt-4 leading-tight">${post.titulo}</h1>
+                    </div>
+                    <div class="mb-12 border-y border-stone-100 py-2">
+                         <img src="${post.imagen}" class="w-full h-auto max-h-[500px] object-cover shadow-sm border border-stone-100" onerror="this.style.display='none'">
+                    </div>
+                    <div class="rich-text text-lg text-stone-700 leading-relaxed space-y-6">
+                        ${formatRichText(post.contenido).split('\n').join('<br>')}
+                    </div>
+                `;
+                loadComments(id);
+                showView('view-detail');
+            });
+        };
+
+        async function loadComments(postId) {
+            const container = document.getElementById('comments-container');
+            const q = query(collection(db, 'publicaciones', postId, 'comentarios'), orderBy("fecha", "desc"));
+            
+            onSnapshot(q, (snap) => {
+                container.innerHTML = '';
+                if (snap.empty) {
+                    container.innerHTML = `<p class="text-stone-400 italic text-sm text-center py-4">No hay consultas registradas aún.</p>`;
+                    return;
+                }
+                snap.forEach(d => {
+                    const c = d.data();
+                    const item = document.createElement('div');
+                    item.className = "bg-white border-l-4 border-ocre p-5 shadow-sm rounded-r-sm fade-in";
+                    item.innerHTML = `
+                        <div class="flex justify-between items-start mb-2">
+                            <p class="font-bold text-bordo text-xs uppercase tracking-wider">${c.nombre}</p>
+                            <p class="text-[9px] text-stone-400 uppercase font-bold">${c.fecha ? new Date(c.fecha.seconds * 1000).toLocaleDateString() : 'Enviando...'}</p>
+                        </div>
+                        <p class="text-stone-700 text-sm italic leading-relaxed">"${c.texto}"</p>
+                    `;
+                    container.appendChild(item);
+                });
+            }, (err) => {
+                console.log("Esperando reglas de subcolección...");
+            });
+        }
+
+        document.getElementById('commentForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-submit-comment');
+            const nombre = document.getElementById('comment-name').value;
+            const texto = document.getElementById('comment-text').value;
+            
+            btn.disabled = true;
+            btn.innerText = "ENVIANDO...";
+
+            try {
+                await addDoc(collection(db, 'publicaciones', currentPostId, 'comentarios'), {
+                    nombre,
+                    texto,
+                    fecha: serverTimestamp()
+                });
+                e.target.reset();
+            } catch (err) {
+                alert("Error al enviar: Asegúrate de que las reglas de Firebase permitan escribir en subcolecciones.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `Enviar Comentario <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>`;
+            }
+        };
+
+        document.getElementById('btn-back-to-list').onclick = () => showView('view-list');
+
+    </script>
+</body>
+</html>
