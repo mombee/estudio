@@ -4,233 +4,456 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Badaloni Mombelli & Fiori. | Estudio Jurídico Civil</title>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Badaloni Mombelli & Fiori",
-    "url": "https://www.estudiobadalonimombellifiori.com.ar/"
-  }
-  </script>
-
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Badaloni Mombelli & Fiori",
+        "url": "https://www.estudiobadalonimombellifiori.com.ar/"
+    }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="logoo2.png">
     <meta name="google-site-verification" content="EUBqAw2reuwE_uMZsjt5NQp5-qedSm28WyKkohFAuLI" />
     <style>
-        :root { --primary: #4c0519; --accent: #b45309; --cream: #fdfaf7; }
-        body { font-family: 'Lora', serif; background-color: var(--cream); color: #1a1a1a; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; }
-        .bg-bordo { background-color: var(--primary); }
-        .text-bordo { color: var(--primary); }
-        .text-ocre { color: var(--accent); }
-        .btn-primary { background-color: var(--primary); color: white; transition: all 0.3s ease; }
-        .btn-primary:hover { background-color: #700a25; transform: translateY(-2px); }
-        
-        .card-service { 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            background-color: var(--primary); color: white; min-height: 280px;
-            padding: 2rem;
-            display: flex; flex-direction: column; justify-content: center; position: relative;
-            cursor: pointer;
-            text-align: center;
+        :root {
+            --primary: #1a0a0f;
+            --burgundy: #1a0a0f;
+            --burgundy-mid: #1a0a0f;
+            --gold: #c9a84c;
+            --gold-light: #e8d5a3;
+            --cream: #faf8f4;
+            --warm-white: #ffffff;
+            --charcoal: #2a2020;
+            --muted: #7a6a6a;
         }
-        @media (min-width: 768px) {
-            .card-service { min-height: 320px; }
+        *, *::before, *::after { box-sizing: border-box; }
+        html { font-size: 16px; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--cream);
+            color: var(--charcoal);
+            -webkit-font-smoothing: antialiased;
         }
-        .card-service:hover { transform: scale(1.02); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2); }
-        .roman-number { font-family: 'Playfair Display', serif; color: var(--accent); font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
-        @media (min-width: 768px) {
-            .roman-number { font-size: 2.5rem; margin-bottom: 1rem; }
+        h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
+
+        /* ── HEADER ── */
+        .site-header {
+            position: fixed; width: 100%; z-index: 50;
+            background: rgba(250, 248, 244, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+        .site-header.scrolled { box-shadow: 0 4px 40px rgba(26,10,15,0.08); }
+        .nav-link {
+            font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+            font-weight: 500; color: var(--muted);
+            transition: color 0.25s ease; position: relative; padding-bottom: 2px;
+        }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 0; height: 1px; background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover { color: var(--burgundy); }
+        .nav-link:hover::after { width: 100%; }
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem; font-weight: 600; letter-spacing: 0.05em;
+            color: var(--burgundy);
+        }
+        .logo-amp { color: var(--gold); }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative; min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1920&q=80') center/cover;
+        }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(0, 0, 0, 0.85) 0%,
+                rgba(60, 58, 58, 0.75) 50%,
+                rgba(26,10,15,0.9) 100%
+            );
+        }
+        .hero-grain {
+            position: absolute; inset: 0; opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+        .hero-content {
+            position: relative; z-index: 10;
+            text-align: center; padding: 0 1.5rem;
+            animation: heroFadeIn 1.2s ease forwards;
+        }
+        @keyframes heroFadeIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hero-eyebrow {
+            font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase;
+            color: var(--gold); font-weight: 500;
+            margin-bottom: 1.5rem; display: block;
+        }
+        .hero-title {
+            font-size: clamp(3rem, 9vw, 7rem); font-weight: 300;
+            color: white; line-height: 1.05; font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        .hero-divider {
+            width: 48px; height: 1px; background: var(--gold);
+            margin: 0 auto 1.5rem;
+        }
+        .hero-subtitle {
+            font-size: clamp(0.875rem, 2vw, 1.125rem);
+            color: rgba(255,255,255,0.7); font-weight: 300;
+            max-width: 520px; line-height: 1.7; margin: 0 auto 2.5rem;
+        }
+        .btn-hero {
+            display: inline-block;
+            border: 1px solid var(--gold); color: var(--gold);
+            padding: 0.875rem 2.5rem;
+            font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 500;
+            transition: all 0.35s ease; position: relative; overflow: hidden;
+        }
+        .btn-hero::before {
+            content: ''; position: absolute; inset: 0;
+            background: var(--gold); transform: scaleX(0); transform-origin: left;
+            transition: transform 0.35s ease; z-index: -1;
+        }
+        .btn-hero:hover { color: var(--primary); }
+        .btn-hero:hover::before { transform: scaleX(1); }
+
+        /* ── QUIÉNES SOMOS ── */
+        .section-label {
+            font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+            color: var(--gold); font-weight: 500; margin-bottom: 1rem;
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 300;
+            color: var(--burgundy); font-style: italic; line-height: 1.15;
         }
 
-        /* Estilo para el aviso de redirección */
-        .redirect-notice {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            color: white;
-            padding: 4px 12px;
-            font-size: 10px;
-            border-radius: 2px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            white-space: nowrap;
+        /* Hover card de miembros */
+        .members-hover-wrap { position: relative; display: inline-block; }
+        .members-dropdown {
+            position: absolute; top: calc(100% + 8px); left: 0;
+            background: white; border: 1px solid rgba(201,168,76,0.25);
+            box-shadow: 0 20px 60px rgba(26,10,15,0.12);
+            padding: 1.25rem 1.5rem; min-width: 220px; z-index: 30;
+            opacity: 0; pointer-events: none; transform: translateY(6px);
+            transition: all 0.25s ease;
         }
-        .card-service:active .redirect-notice {
-            opacity: 1;
+        .members-hover-wrap:hover .members-dropdown {
+            opacity: 1; pointer-events: auto; transform: translateY(0);
         }
+        .members-dropdown li {
+            font-size: 0.8rem; color: var(--charcoal); padding: 0.4rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            letter-spacing: 0.02em;
+        }
+        .members-dropdown li:last-child { border-bottom: none; }
+        .founders-tag {
+            font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--gold); font-weight: 600; margin-bottom: 0.5rem; display: block;
+        }
+
+        /* ── SERVICIOS ── */
+        .services-bg { background-color: var(--primary); }
+        .card-service {
+            position: relative; overflow: hidden;
+            background: transparent;
+            border: 1px solid rgba(201,168,76,0.15);
+            padding: 2.5rem 2rem; min-height: 280px;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            cursor: pointer;
+            transition: border-color 0.4s ease, transform 0.4s ease;
+        }
+        .card-service::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(145deg, rgba(201,168,76,0.06) 0%, transparent 60%);
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .card-service:hover { border-color: rgba(201,168,76,0.5); transform: translateY(-4px); }
+        .card-service:hover::before { opacity: 1; }
+        .card-service:hover .card-number { color: rgba(201,168,76,0.9); }
+        .card-number {
+            position: absolute; top: 1.5rem; right: 1.75rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem; font-weight: 300; font-style: italic;
+            color: rgba(201,168,76,0.15); line-height: 1;
+            transition: color 0.4s ease; user-select: none;
+        }
+        .card-label {
+            font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase;
+            color: var(--gold); margin-bottom: 0.6rem; font-weight: 500;
+        }
+        .card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem; font-weight: 400; color: white;
+            line-height: 1.2; margin-bottom: 0.75rem;
+        }
+        .card-desc {
+            font-size: 0.78rem; color: rgba(255,255,255,0.5);
+            line-height: 1.65; font-weight: 300;
+        }
+        .card-arrow {
+            display: inline-block; margin-top: 1.25rem;
+            font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--gold); opacity: 0;
+            transform: translateX(-6px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .card-service:hover .card-arrow { opacity: 1; transform: translateX(0); }
+
+        /* ── CONTACTO ── */
+        .contact-left {
+            background: var(--burgundy);
+            position: relative; overflow: hidden;
+        }
+        .contact-left::after {
+            content: '"'; position: absolute; bottom: -1rem; right: -0.5rem;
+            font-family: 'Cormorant Garamond', serif; font-size: 10rem;
+            color: rgba(201,168,76,0.08); line-height: 1; pointer-events: none;
+        }
+        .input-field {
+            width: 100%; background: transparent;
+            border: none; border-bottom: 1px solid rgba(42,32,32,0.2);
+            padding: 0.75rem 0; font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem; color: var(--charcoal); outline: none;
+            transition: border-color 0.25s ease;
+        }
+        .input-field::placeholder { color: var(--muted); font-weight: 300; }
+        .input-field:focus { border-color: var(--gold); }
+        .btn-submit {
+            background: var(--burgundy); color: white;
+            padding: 1rem 2rem; width: 100%;
+            font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 500;
+            border: none; cursor: pointer; transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-submit:hover { background: var(--burgundy-mid); }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* ── FOOTER ── */
+        .site-footer { background: var(--primary); }
+
+        /* ── ANIMATIONS ── */
+        .reveal {
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- Cabecera -->
-    <header class="fixed w-full bg-white/95 z-50 border-b border-ocre/20 shadow-sm">
-        <div class="container mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <div class="w-10 h-10 md:w-10 md:h-10 flex items-center justify-center rounded-sm overflow-hidden">
+    <!-- HEADER -->
+    <header class="site-header" id="site-header">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 flex items-center justify-center overflow-hidden">
                     <img src="logoo1.png" alt="Logo" class="w-full h-full object-cover">
                 </div>
-                <span class="text-base md:text-xl font-bold tracking-widest uppercase text-bordo">Badaloni Mombelli <span class="text-ocre">&</span> Fiori</span>
+                <span class="logo-text">Badaloni Mombelli <span class="logo-amp">&</span> Fiori</span>
             </div>
-            <nav class="hidden md:flex space-x-8 uppercase text-xs tracking-widest font-bold text-stone-600">
-                <a href="#inicio" class="hover:text-ocre transition-colors">Inicio</a>
-                <a href="#quienes-somos" class="hover:text-ocre transition-colors">Quiénes Somos</a>
-                <a href="#servicios" class="hover:text-ocre transition-colors">Servicios</a>
-                <a href="#contacto" class="hover:text-ocre transition-colors">Contacto</a>
+            <nav class="hidden md:flex items-center gap-10">
+                <a href="#inicio" class="nav-link">Inicio</a>
+                <a href="#quienes-somos" class="nav-link">Quiénes Somos</a>
+                <a href="#servicios" class="nav-link">Servicios</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
             </nav>
         </div>
     </header>
 
-    <!-- Hero -->
-    <section id="inicio" class="relative h-[90vh] md:h-screen flex items-center justify-center text-white pt-16">
-        <div class="absolute inset-0 bg-stone-900/60 z-10"></div>
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center"></div>
-        <div class="relative z-20 text-center px-6">
-            <h1 class="text-4xl md:text-7xl mb-4 md:mb-6 italic">Derecho & Trayectoria</h1>
-            <p class="text-lg md:text-2xl max-w-2xl mx-auto font-light leading-relaxed mb-8 md:mb-10">
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-grain"></div>
+        <div class="hero-content">
+            <span class="hero-eyebrow">Estudio Jurídico Civil · Buenos Aires</span>
+            <h1 class="hero-title">Derecho <br>& Trayectoria</h1>
+            <div class="hero-divider"></div>
+            <p class="hero-subtitle">
                 Defensa integral en Derecho Civil y Comercial con el rigor que su causa merece.
             </p>
-            <a href="#contacto" class="border border-ocre text-ocre hover:bg-ocre hover:text-white px-6 md:px-8 py-3 uppercase tracking-widest text-xs md:text-sm font-bold inline-block transition-all duration-300">
-                Solicitar Consulta
-            </a>
+            <a href="#contacto" class="btn-hero">Solicitar Consulta</a>
         </div>
     </section>
 
-    <!-- Sección Quiénes Somos -->
-    <section id="quienes-somos" class="py-16 md:py-24 bg-white">
+    <!-- QUIÉNES SOMOS -->
+    <section id="quienes-somos" class="py-24 md:py-32 bg-white">
         <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center gap-10 md:gap-12">
-                <div class="w-full md:w-1/2">
-                    <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=800&q=80" alt="Estudio Jurídico" class="shadow-xl md:shadow-2xl border-l-4 md:border-l-8 border-bordo p-1 md:p-2 w-full h-auto">
+            <div class="flex flex-col md:flex-row items-center gap-16">
+                <div class="w-full md:w-5/12 reveal">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&w=800&q=80"
+                             alt="Estudio Jurídico"
+                             class="w-full h-auto object-cover shadow-2xl"
+                             style="max-height: 520px; object-position: center;">
+                        <div style="position:absolute; bottom: -1.5rem; left: -1.5rem; width: 60%; height: 60%; border: 1px solid rgba(201,168,76,0.4); z-index: -1;"></div>
+                    </div>
                 </div>
-                <div class="w-full md:w-1/2">
-                    <div class="group relative inline-block">
-                        <h2 class="text-3xl md:text-4xl font-bold mb-4 md:mb-6 text-bordo italic cursor-help">¿Quienes somos?</h2>
-                        <!-- Lista Hover -->
-                        <div class="relative inline-block group">
+                <div class="w-full md:w-7/12 reveal" style="transition-delay: 0.15s">
+                    <p class="section-label">Nuestra historia</p>
 
-    <!-- Lista principal -->
-    <div class="absolute top-0 z-30 invisible group-hover:visible opacity-0 
-                group-hover:opacity-100 transition-all duration-300 
-                bg-white border border-stone-200 shadow-xl 
-                p-4 w-64 rounded-sm">
-        <ul class="text-sm text-stone-700 space-y-2">
-            <li class="border-b border-stone-100 pb-1">Dra. Graciela Badaloni</li>
-            <li class="border-b border-stone-100 pb-1">Dra. Luciana Mombelli</li>
-            <li>Dra. Valeria Fiori</li>
-        </ul>
-    </div>
+                    <div class="members-hover-wrap">
+                        <h2 class="section-title mb-6 cursor-default">¿Quiénes somos?</h2>
+                        <div class="members-dropdown">
+                            <span class="founders-tag">Fundadores</span>
+                            <ul>
+                                <li>Dra. Graciela Badaloni</li>
+                                <li>Dr. Miguel Angel Mombelli</li>
+                            </ul>
+                            <span class="founders-tag" style="margin-top:0.75rem;">Equipo Actual</span>
+                            <ul>
+                                <li>Dra. Graciela Badaloni</li>
+                                <li>Dra. Luciana Mombelli</li>
+                                <li>Dra. Valeria Fiori</li>
+                            </ul>
+                        </div>
+                    </div>
 
-    <!-- Fundadores (derecha del primero) -->
-    <div class="absolute top-0 right-full ml-2 z-40 invisible 
-                group-hover:visible opacity-0 group-hover:opacity-100 
-                transition-all duration-300 bg-white 
-                border border-stone-200 shadow-xl 
-                p-4 w-64 rounded-sm">
-        <ul class=" text-stone-700 space-y-2">
-            <li class="font-bold border-b border-stone-100 pb-1">FUNDADORES</li>
-            <li class="border-b border-stone-100 pb-1">Dra. Graciela Badaloni</li>
-            <li class="border-b border-stone-100 pb-1">Dr. Miguel Angel Mombelli</li>
-        </ul>
-    </div>
-
-</div>
-
-</div>
-                    <p class="text-base md:text-lg leading-relaxed text-stone-700 mb-4">
+                    <div style="width:48px; height:1px; background:var(--gold); margin-bottom:1.5rem;"></div>
+                    <p class="text-base leading-relaxed mb-5" style="color:var(--charcoal);">
                         Con más de cuatro décadas de trayectoria, nuestro estudio se ha consolidado como un referente en la resolución de conflictos civiles de alta complejidad.
                     </p>
-                    <p class="text-stone-600 text-sm md:text-base">Fundado bajo la premisa de que cada cliente merece una estrategia personalizada, combinamos la experiencia académica con la agilidad procesal necesaria en los tiempos actuales.</p>
+                    <p class="text-sm leading-relaxed" style="color:var(--muted); font-weight:300;">
+                        Fundado bajo la premisa de que cada cliente merece una estrategia personalizada, combinamos la experiencia académica con la agilidad procesal necesaria en los tiempos actuales.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Sección Servicios -->
-    <section id="servicios" class="py-16 md:py-24 bg-stone-50">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-bordo italic mb-10 md:mb-16">Áreas de Especialización</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                
-                
-                <!-- Servicio 2 -->
-                <div class="card-service shadow-lg" onclick="location.href='servicio-detalle.html?id=sucesiones'">
-                    <div class="roman-number">I</div>
-                    <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4 uppercase text-white">Sucesiones</h3>
-                    <p class="text-stone-200 text-xs md:text-sm font-light leading-relaxed">Tramitación de herencias y planificación sucesoria estratégica.</p>
-                    <span class="redirect-notice">Ver detalles y publicaciones</span>
+    <!-- SERVICIOS -->
+    <section id="servicios" class="services-bg py-24 md:py-32">
+        <div class="container mx-auto px-6">
+            <div class="mb-16 reveal">
+                <p class="section-label" style="color:rgba(201,168,76,0.7);">Lo que hacemos</p>
+                <h2 class="section-title" style="color:white; font-size: clamp(2.2rem,5vw,3.5rem);">Áreas de Especialización</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-gold/10" style="gap: 1px; background: rgba(201,168,76,0.08);">
+
+                <div class="card-service reveal" onclick="location.href='servicio-detalle.html?id=sucesiones'" style="transition-delay:0.05s">
+                    <span class="card-number">I</span>
+                    <p class="card-label">Área I</p>
+                    <h3 class="card-title">Sucesiones</h3>
+                    <p class="card-desc">Tramitación de herencias y planificación sucesoria estratégica.</p>
+                    <span class="card-arrow">Ver publicaciones →</span>
                 </div>
 
-                <!-- Servicio 3 -->
-                <div class="card-service shadow-lg" onclick="location.href='servicio-detalle.html?id=contratos'">
-                    <div class="roman-number">II</div>
-                    <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4 uppercase text-white">Contratos y Daños</h3>
-                    <p class="text-stone-200 text-xs md:text-sm font-light leading-relaxed">Responsabilidad civil y reclamos por incumplimientos contractuales.</p>
-                    <span class="redirect-notice">Ver detalles y publicaciones</span>
+                <div class="card-service reveal" onclick="location.href='servicio-detalle.html?id=contratos'" style="transition-delay:0.1s">
+                    <span class="card-number">II</span>
+                    <p class="card-label">Área II</p>
+                    <h3 class="card-title">Contratos y Daños</h3>
+                    <p class="card-desc">Responsabilidad civil y reclamos por incumplimientos contractuales.</p>
+                    <span class="card-arrow">Ver publicaciones →</span>
                 </div>
 
-                <!-- Servicio 4 -->
-                <div class="card-service shadow-lg" onclick="location.href='servicio-detalle.html?id=amparos'">
-                    <div class="roman-number">III</div>
-                    <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4 uppercase text-white">Procesos de Amparo</h3>
-                    <p class="text-stone-200 text-xs md:text-sm font-light leading-relaxed">Protección urgente de derechos fundamentales y garantías constitucionales.</p>
-                    <span class="redirect-notice">Ver detalles y publicaciones</span>
+                <div class="card-service reveal" onclick="location.href='servicio-detalle.html?id=amparos'" style="transition-delay:0.15s">
+                    <span class="card-number">III</span>
+                    <p class="card-label">Área III</p>
+                    <h3 class="card-title">Procesos de Amparo</h3>
+                    <p class="card-desc">Protección urgente de derechos fundamentales y garantías constitucionales.</p>
+                    <span class="card-arrow">Ver publicaciones →</span>
                 </div>
 
-                <!-- Servicio 5 -->
-                <div class="card-service shadow-lg" onclick="location.href='servicio-detalle.html?id=salud'">
-                    <div class="roman-number">IV</div>
-                    <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4 uppercase text-white">Derecho de Salud</h3>
-                    <p class="text-stone-200 text-xs md:text-sm font-light leading-relaxed">Gestión ante prepagas y obras sociales para garantizar el acceso a prestaciones médicas.</p>
-                    <span class="redirect-notice">Ver detalles y publicaciones</span>
+                <div class="card-service reveal" onclick="location.href='servicio-detalle.html?id=salud'" style="transition-delay:0.2s">
+                    <span class="card-number">IV</span>
+                    <p class="card-label">Área IV</p>
+                    <h3 class="card-title">Derecho de Salud</h3>
+                    <p class="card-desc">Gestión ante prepagas y obras sociales para garantizar el acceso a prestaciones médicas.</p>
+                    <span class="card-arrow">Ver publicaciones →</span>
                 </div>
 
-                <!-- Servicio 6 -->
-                <div class="card-service shadow-lg" onclick="location.href='servicio-detalle.html?id=consorcios'">
-                    <div class="roman-number">V</div>
-                    <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4 uppercase text-white">Propiedad Horizontal</h3>
-                    <p class="text-stone-200 text-xs md:text-sm font-light leading-relaxed">Asesoramiento legal en conflictos consorciales e incumplimientos reglamentarios.</p>
-                    <span class="redirect-notice">Ver detalles y publicaciones</span>
+                <div class="card-service reveal" onclick="location.href='servicio-detalle.html?id=consorcios'" style="transition-delay:0.25s">
+                    <span class="card-number">V</span>
+                    <p class="card-label">Área V</p>
+                    <h3 class="card-title">Propiedad Horizontal</h3>
+                    <p class="card-desc">Asesoramiento legal en conflictos consorciales e incumplimientos reglamentarios.</p>
+                    <span class="card-arrow">Ver publicaciones →</span>
                 </div>
 
             </div>
         </div>
     </section>
 
-    <!-- Contacto -->
-    <section id="contacto" class="py-16 md:py-24 bg-white">
+    <!-- CONTACTO -->
+    <section id="contacto" class="py-24 md:py-32 bg-white">
         <div class="container mx-auto px-4 md:px-6 max-w-4xl">
-            <div class="shadow-2xl flex flex-col md:flex-row overflow-hidden border border-stone-200 rounded-sm">
-                <div class="w-full md:w-1/3 bg-bordo p-8 md:p-12 text-white">
-                    <h3 class="text-2xl font-bold mb-4 md:mb-6 text-ocre italic">Contacto</h3>
-                    <p class="text-stone-300 text-xs md:text-sm leading-relaxed italic">Atención personalizada para casos complejos. Inicie su consulta legal hoy mismo.</p>
+            <div class="reveal">
+                <p class="section-label text-center">Hable con nosotros</p>
+                <h2 class="section-title text-center mb-12">Inicie su Consulta</h2>
+            </div>
+            <div class="flex flex-col md:flex-row overflow-hidden shadow-2xl reveal" style="border: 1px solid rgba(76,5,25,0.12);">
+                <div class="contact-left w-full md:w-5/12 p-10 md:p-12 text-white">
+                    <p class="section-label" style="color:var(--gold-light);">Estudio BMF</p>
+                    <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.75rem; font-weight:300; font-style:italic; margin-bottom:1rem; line-height:1.3;">
+                        Atención personalizada para casos complejos.
+                    </h3>
+                    <div style="width:32px;height:1px;background:var(--gold);margin:1.25rem 0;"></div>
+                    <p style="font-size:0.8rem; color:rgba(255,255,255,0.55); line-height:1.75; font-weight:300;">
+                        Cada consulta es tratada con la confidencialidad y el rigor que merece. Nuestro equipo le responderá a la brevedad.
+                    </p>
                 </div>
-                <div class="w-full md:w-2/3 p-8 md:p-12 bg-white">
-                    <form id="contactForm" class="space-y-6" onsubmit="return false;">
-                        <input type="text" id="nombre" placeholder="Nombre Completo" class="w-full border-b border-stone-300 py-2 focus:border-ocre outline-none text-sm" required>
-                        <input type="email" id="email" placeholder="Email" class="w-full border-b border-stone-300 py-2 focus:border-ocre outline-none text-sm" required>
-                        <textarea id="mensaje" rows="4" placeholder="Su mensaje..." class="w-full border-b border-stone-300 py-2 focus:border-ocre outline-none text-sm" required></textarea>
-                        <button type="submit" id="submitBtn" class="btn-primary w-full py-4 uppercase tracking-widest text-xs font-bold rounded-sm">Enviar Consulta</button>
-                        <p id="success-msg" class="hidden text-center text-green-700 font-bold mt-4 text-xs">Consulta enviada correctamente.</p>
+                <div class="w-full md:w-7/12 p-10 md:p-12 bg-white">
+                    <form id="contactForm" class="space-y-7" onsubmit="return false;">
+                        <div>
+                            <label style="font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);font-weight:500;">Nombre Completo</label>
+                            <input type="text" id="nombre" placeholder="Ej. Juan García" class="input-field" required>
+                        </div>
+                        <div>
+                            <label style="font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);font-weight:500;">Correo Electrónico</label>
+                            <input type="email" id="email" placeholder="su@email.com" class="input-field" required>
+                        </div>
+                        <div>
+                            <label style="font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);font-weight:500;">Mensaje</label>
+                            <textarea id="mensaje" rows="4" placeholder="Describa brevemente su situación..." class="input-field" style="resize:none;" required></textarea>
+                        </div>
+                        <button type="submit" id="submitBtn" class="btn-submit">Enviar Consulta</button>
+                        <p id="success-msg" class="hidden text-center text-xs font-medium" style="color:#2d6a4f;letter-spacing:0.1em;">Consulta enviada correctamente.</p>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-stone-100 py-8 md:py-12 text-center border-t-4 border-bordo">
-        <p class="text-stone-500 text-[10px] uppercase tracking-widest mb-4">&copy; 2026 Badaloni Mombelli & Fiori . Lima 29 2F, CABA</p>
-        <a href="admin.html" class="text-stone-400 hover:text-bordo text-[9px] uppercase border px-4 py-1 border-stone-300 transition-colors">Acceso</a>
+    <!-- FOOTER -->
+    <footer class="site-footer py-10 text-center">
+        <p style="font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1rem;">
+            &copy; 2026 Badaloni Mombelli & Fiori · Lima 29 2F, CABA
+        </p>
+        <a href="admin.html" style="font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.1);padding:0.4rem 1.25rem;transition:all 0.3s ease;" onmouseover="this.style.color='rgba(201,168,76,0.7)';this.style.borderColor='rgba(201,168,76,0.3)'" onmouseout="this.style.color='rgba(255,255,255,0.2)';this.style.borderColor='rgba(255,255,255,0.1)'">Acceso</a>
     </footer>
+
+    <script>
+        // Scroll header shadow
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 30);
+        });
+
+        // Reveal on scroll
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+        }, { threshold: 0.1 });
+        revealEls.forEach(el => observer.observe(el));
+    </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -255,17 +478,13 @@
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             e.stopPropagation();
-            
             const btn = document.getElementById('submitBtn');
             const successMsg = document.getElementById('success-msg');
-            
             btn.disabled = true;
             btn.innerText = "PROCESANDO...";
             successMsg.classList.add('hidden');
-
             try {
                 if (!auth.currentUser) await signInAnonymously(auth);
-                
                 await addDoc(collection(db, 'consultas'), {
                     nombre: document.getElementById('nombre').value,
                     email: document.getElementById('email').value,
@@ -273,17 +492,14 @@
                     fecha: serverTimestamp(),
                     leido: false
                 });
-                
                 successMsg.classList.remove('hidden');
                 contactForm.reset();
                 btn.innerText = "ENVIADO";
-                
                 setTimeout(() => {
                     btn.innerText = "ENVIAR CONSULTA";
                     btn.disabled = false;
                     successMsg.classList.add('hidden');
                 }, 4000);
-
             } catch (err) {
                 console.error("Error:", err);
                 btn.innerText = "REINTENTAR";

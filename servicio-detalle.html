@@ -7,133 +7,394 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="logoo2.png">
     <style>
-        :root { --primary: #4c0519; --accent: #b45309; --cream: #fdfaf7; --yellow-text: #fbbf24; }
-        body { font-family: 'Lora', serif; background-color: var(--cream); color: #1a1a1a; min-height: 100vh; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; }
-        .bg-bordo { background-color: var(--primary); }
-        .text-bordo { color: var(--primary); }
-        .text-ocre { color: var(--accent); }
-        .text-yellow-custom { color: var(--yellow-text); }
-        .border-ocre { border-color: var(--accent); }
-        
-        /* Renderizado de texto enriquecido */
-        .rich-text strong { font-weight: 700; color: #000; }
-        .rich-text .highlight { color: var(--accent); font-style: italic; font-weight: 600; }
+        :root {
+            --primary: #1a0a0f;
+            --burgundy: #4c0519;
+            --burgundy-mid: #6b0a22;
+            --gold: #c9a84c;
+            --gold-light: #e8d5a3;
+            --cream: #faf8f4;
+            --charcoal: #2a2020;
+            --muted: #7a6a6a;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--cream);
+            color: var(--charcoal);
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+        h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; }
 
-        .btn-float { position: fixed; bottom: 30px; right: 30px; z-index: 50; }
-        .line-clamp-4 { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
-        
-        .fade-in { animation: fadeIn 0.5s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* NAV */
+        .site-nav {
+            background: rgba(250,248,244,0.95);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(201,168,76,0.18);
+            position: sticky; top: 0; z-index: 40;
+        }
+        .back-link {
+            font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+            font-weight: 500; color: var(--muted); display: flex; align-items: center; gap: 0.5rem;
+            transition: color 0.2s ease;
+        }
+        .back-link:hover { color: var(--burgundy); }
+        .back-link svg { width: 14px; height: 14px; }
+
+        /* HEADER */
+        .page-header {
+            background: var(--primary);
+            padding: 5rem 1.5rem 4rem;
+            text-align: center; position: relative; overflow: hidden;
+        }
+        .page-header::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(76,5,25,0.6) 0%, transparent 70%);
+        }
+        .header-label {
+            font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+            color: rgba(201,168,76,0.7); font-weight: 500; margin-bottom: 1rem;
+            position: relative; z-index: 2;
+        }
+        .header-title {
+            font-size: clamp(2.5rem, 7vw, 5rem); font-style: italic;
+            font-weight: 300; color: white; line-height: 1.1;
+            position: relative; z-index: 2; margin-bottom: 1rem;
+        }
+        .header-desc {
+            font-size: 0.9rem; color: rgba(255,255,255,0.45);
+            font-weight: 300; position: relative; z-index: 2;
+        }
+
+        /* ADMIN PANEL */
+        .admin-panel {
+            background: white; border: 1px solid rgba(201,168,76,0.25);
+            box-shadow: 0 20px 60px rgba(26,10,15,0.08);
+            padding: 2.5rem; margin-bottom: 3rem;
+        }
+        .admin-label {
+            font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+            color: var(--gold); font-weight: 500; margin-bottom: 0.5rem;
+        }
+        .admin-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.75rem; font-weight: 300; font-style: italic;
+            color: var(--burgundy);
+        }
+        .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+        .form-label {
+            font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--muted); font-weight: 500;
+        }
+        .form-input {
+            border: none; border-bottom: 1px solid rgba(42,32,32,0.15);
+            padding: 0.65rem 0; font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem; color: var(--charcoal); outline: none;
+            background: transparent; transition: border-color 0.25s ease; width: 100%;
+        }
+        .form-input:focus { border-color: var(--gold); }
+        .form-input::placeholder { color: var(--muted); font-weight: 300; }
+        .form-tip {
+            font-size: 9px; color: var(--muted); font-style: italic;
+            letter-spacing: 0.03em; opacity: 0.7; margin-top: -0.5rem;
+        }
+        .btn-publish {
+            background: var(--burgundy); color: var(--gold-light);
+            padding: 0.875rem 2.5rem;
+            font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+            font-weight: 500; border: none; cursor: pointer;
+            font-family: 'DM Sans', sans-serif; transition: background 0.3s ease;
+        }
+        .btn-publish:hover { background: var(--burgundy-mid); }
+        .btn-publish:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* SECTION DIVIDER */
+        .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2.5rem; }
+        .section-title-sm {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem; font-weight: 300; font-style: italic; color: var(--charcoal);
+        }
+        .btn-add-round {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--burgundy); color: white;
+            display: none; align-items: center; justify-content: center;
+            font-size: 1.4rem; line-height: 1; border: none; cursor: pointer;
+            box-shadow: 0 4px 16px rgba(76,5,25,0.3);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .btn-add-round:hover { transform: scale(1.1); box-shadow: 0 8px 24px rgba(76,5,25,0.4); }
+        .btn-add-round.visible { display: flex; }
+
+        /* POST CARDS */
+        .post-card {
+            background: white; border: 1px solid rgba(42,32,32,0.08);
+            display: flex; flex-direction: column; overflow: hidden;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .post-card:hover { box-shadow: 0 16px 48px rgba(26,10,15,0.1); transform: translateY(-3px); }
+        .post-card-img {
+            height: 200px; overflow: hidden; background: #e8e0d8;
+            cursor: pointer;
+        }
+        .post-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .post-card:hover .post-card-img img { transform: scale(1.04); }
+        .post-card-body { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .post-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; }
+        .post-author {
+            font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--gold); font-weight: 500;
+        }
+        .post-date {
+            font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--muted); font-weight: 400;
+        }
+        .post-title-card {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem; font-weight: 400; color: var(--burgundy);
+            line-height: 1.25; margin-bottom: 0.75rem;
+            cursor: pointer; transition: color 0.2s ease;
+        }
+        .post-title-card:hover { color: var(--gold); }
+        .post-excerpt {
+            font-size: 0.8rem; color: var(--muted); line-height: 1.7;
+            font-weight: 300; flex-grow: 1; overflow: hidden;
+            display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
+        }
+        .post-card-footer { padding: 1rem 1.5rem 1.5rem; }
+        .btn-read {
+            font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--gold); font-weight: 500; border: none; background: none;
+            cursor: pointer; padding: 0; display: flex; align-items: center; gap: 0.4rem;
+            transition: gap 0.2s ease, color 0.2s ease;
+        }
+        .btn-read:hover { gap: 0.7rem; color: var(--burgundy); }
+        .btn-delete {
+            position: absolute; top: 0.6rem; right: 0.6rem;
+            width: 28px; height: 28px; border-radius: 50%;
+            background: rgba(220,38,38,0.85); color: white; font-size: 1rem;
+            display: flex; align-items: center; justify-content: center;
+            border: none; cursor: pointer; z-index: 10;
+            transition: background 0.2s ease;
+        }
+        .btn-delete:hover { background: rgb(185,28,28); }
+
+        /* DETAIL VIEW */
+        .single-article {
+            background: white; border: 1px solid rgba(42,32,32,0.08);
+            padding: 3rem 2.5rem; box-shadow: 0 4px 24px rgba(26,10,15,0.06);
+        }
+        @media(min-width:768px) { .single-article { padding: 4rem; } }
+        .article-eyebrow {
+            font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase;
+            color: var(--gold); font-weight: 500; margin-bottom: 0.75rem;
+        }
+        .article-title {
+            font-size: clamp(2rem, 5vw, 3.5rem); font-style: italic;
+            font-weight: 300; color: var(--burgundy); line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        .article-divider { width: 40px; height: 1px; background: var(--gold); margin-bottom: 2rem; }
+        .article-img-wrap {
+            margin: 0 -2.5rem 2.5rem;
+            border-top: 1px solid rgba(42,32,32,0.06);
+            border-bottom: 1px solid rgba(42,32,32,0.06);
+        }
+        @media(min-width:768px) { .article-img-wrap { margin: 0 -4rem 3rem; } }
+        .article-img-wrap img { width: 100%; max-height: 480px; object-fit: cover; display: block; }
+        .article-body {
+            font-size: 1rem; color: var(--charcoal); line-height: 1.85;
+            font-weight: 300;
+        }
+        .rich-text strong { font-weight: 600; color: var(--charcoal); }
+        .rich-text .highlight { color: var(--gold); font-style: italic; font-weight: 500; }
+
+        /* COMMENTS */
+        .comments-section {
+            background: white; border: 1px solid rgba(42,32,32,0.08);
+            padding: 2.5rem;
+        }
+        .comment-form-input {
+            width: 100%; background: var(--cream);
+            border: 1px solid rgba(42,32,32,0.1);
+            padding: 0.75rem 1rem; font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem; color: var(--charcoal); outline: none;
+            transition: border-color 0.25s ease; font-weight: 300;
+        }
+        .comment-form-input:focus { border-color: var(--gold); }
+        .comment-form-input::placeholder { color: var(--muted); }
+        .btn-comment {
+            background: var(--burgundy); color: white;
+            padding: 0.875rem 2rem; border: none; cursor: pointer;
+            font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+            font-weight: 500; font-family: 'DM Sans', sans-serif;
+            display: flex; align-items: center; gap: 0.5rem;
+            transition: background 0.3s ease;
+        }
+        .btn-comment:hover { background: var(--burgundy-mid); }
+        .btn-comment:disabled { opacity: 0.6; cursor: not-allowed; }
+        .comment-item {
+            border-left: 2px solid var(--gold);
+            padding: 1rem 1.25rem; background: var(--cream);
+        }
+        .comment-author {
+            font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--burgundy); font-weight: 500;
+        }
+        .comment-date {
+            font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--muted);
+        }
+        .comment-text {
+            font-size: 0.85rem; color: var(--charcoal);
+            line-height: 1.7; font-weight: 300; font-style: italic; margin-top: 0.4rem;
+        }
+
+        /* FLOAT BUTTON */
+        .btn-float-pub {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 50;
+            background: var(--gold); color: var(--primary);
+            padding: 0.875rem 1.5rem; border-radius: 2rem;
+            font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600;
+            display: none; align-items: center; gap: 0.5rem; border: none; cursor: pointer;
+            box-shadow: 0 8px 32px rgba(201,168,76,0.4); transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-float-pub:hover { background: var(--gold-light); box-shadow: 0 12px 40px rgba(201,168,76,0.5); transform: translateY(-2px); }
+        .btn-float-pub.visible { display: flex; }
+
+        /* BACK BUTTON */
+        .btn-back {
+            font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--gold); font-weight: 500; background: none; border: none; cursor: pointer;
+            display: flex; align-items: center; gap: 0.5rem; margin-bottom: 2rem;
+            padding: 0; transition: color 0.2s ease;
+        }
+        .btn-back:hover { color: var(--burgundy); }
+
+        /* FADE */
+        .fade-in { animation: fadeIn 0.4s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* FOOTER */
+        .site-footer { background: var(--primary); }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- Navegación -->
-    <nav class="bg-white border-b border-ocre/20 py-4 shadow-sm sticky top-0 z-40">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="text-bordo font-bold uppercase tracking-widest flex items-center gap-2 text-xs">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <!-- NAV -->
+    <nav class="site-nav">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="back-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
                 Volver al Inicio
             </a>
             <div id="admin-auth-status">
-                <a href="admin.html" class="text-[10px] uppercase font-bold tracking-widest text-stone-400 hover:text-bordo transition-colors">
+                <a href="admin.html" style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);font-weight:500;transition:color 0.2s ease;" onmouseover="this.style.color='var(--burgundy)'" onmouseout="this.style.color='var(--muted)'">
                     Acceso Empleados
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- Vista de Listado Principal -->
+    <!-- VISTA LISTADO -->
     <div id="view-list">
-        <header class="bg-bordo text-white py-16 md:py-24">
-            <div class="container mx-auto px-6 text-center">
-                <h1 id="service-title" class="text-4xl md:text-6xl italic mb-4">Cargando servicio...</h1>
-                <p id="service-desc" class="text-ocre text-lg md:text-xl font-light italic">Especialistas en la materia.</p>
-            </div>
+        <header class="page-header">
+            <p class="header-label">Área Jurídica</p>
+            <h1 id="service-title" class="header-title">Cargando servicio...</h1>
+            <p id="service-desc" class="header-desc">Especialistas en la materia.</p>
         </header>
 
-        <main class="container mx-auto px-6 py-12">
-            <!-- Sección de Administración -->
-            <section id="admin-section" class="hidden mb-16 bg-white border border-ocre/30 p-8 shadow-lg rounded-sm relative fade-in">
-                <div class="flex items-center justify-between mb-8">
-                    <h2 class="text-2xl font-bold text-bordo italic">Nueva Publicación Profesional</h2>
-                    <button id="close-admin" class="text-stone-400 hover:text-red-700 text-xl">&times;</button>
+        <main class="container mx-auto px-6 py-16 max-w-6xl">
+
+            <!-- PANEL ADMIN -->
+            <section id="admin-section" class="hidden admin-panel fade-in" style="margin-bottom: 3rem;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2rem;">
+                    <div>
+                        <p class="admin-label">Panel de Gestión</p>
+                        <h2 class="admin-title">Nueva Publicación Profesional</h2>
+                    </div>
+                    <button id="close-admin" style="font-size:1.5rem;color:var(--muted);background:none;border:none;cursor:pointer;line-height:1;transition:color 0.2s ease;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='var(--muted)'">&times;</button>
                 </div>
-                <form id="postForm" class="space-y-4">
-                    <input type="text" id="post-title" placeholder="Título de la publicación" class="w-full border border-stone-200 p-3 outline-none focus:border-ocre" required>
-                    <input type="url" id="post-img" placeholder="URL de la imagen (miniatura)" class="w-full border border-stone-200 p-3 outline-none focus:border-ocre" required>
-                    <div class="text-[10px] text-stone-400 uppercase tracking-widest mb-1 italic">Tip: Usa *texto* para negrita y [texto] para resaltar en ocre</div>
-                    <textarea id="post-content" rows="6" placeholder="Contenido informativo para los clientes..." class="w-full border border-stone-200 p-3 outline-none focus:border-ocre" required></textarea>
-                    <div class="flex justify-end pt-2">
-                        <button type="submit" class="bg-bordo text-yellow-custom px-10 py-4 uppercase tracking-[0.2em] font-bold text-xs hover:opacity-90 transition-all shadow-md">
-                            Publicar
-                        </button>
+                <form id="postForm" style="display:flex;flex-direction:column;gap:1.5rem;">
+                    <div class="form-group">
+                        <label class="form-label">Título de la Publicación</label>
+                        <input type="text" id="post-title" placeholder="Ej. Actualización en el régimen sucesorio" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">URL de la imagen (miniatura)</label>
+                        <input type="url" id="post-img" placeholder="https://..." class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contenido</label>
+                        <p class="form-tip">Tip: usa *texto* para negrita y [texto] para resaltar en dorado.</p>
+                        <textarea id="post-content" rows="6" placeholder="Contenido informativo para los clientes..." class="form-input" style="resize:vertical;" required></textarea>
+                    </div>
+                    <div style="display:flex;justify-content:flex-end;">
+                        <button type="submit" class="btn-publish">Publicar</button>
                     </div>
                 </form>
             </section>
 
-            <div class="flex justify-between items-end mb-8 border-b border-stone-200 pb-4">
-                <h2 class="text-3xl font-bold text-stone-800 italic">Actualidad Jurídica</h2>
-                <button id="btn-add-post-main" class="hidden bg-bordo text-white w-10 h-10 flex items-center justify-center rounded-full text-2xl hover:scale-110 transition-transform shadow-lg">+</button>
+            <!-- ENCABEZADO SECCIÓN PUBLICACIONES -->
+            <div class="section-header" style="border-bottom:1px solid rgba(42,32,32,0.1);padding-bottom:1.25rem;">
+                <h2 class="section-title-sm">Actualidad Jurídica</h2>
+                <button id="btn-add-post-main" class="btn-add-round">+</button>
             </div>
 
-            <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <div class="animate-pulse col-span-full text-center py-20 text-stone-400">Sincronizando con el archivo del estudio...</div>
+            <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" style="margin-top:2.5rem;">
+                <div style="grid-column:1/-1;text-align:center;padding:5rem 0;color:var(--muted);font-style:italic;font-size:0.875rem;font-weight:300;">
+                    Sincronizando con el archivo del estudio...
+                </div>
             </div>
         </main>
     </div>
 
-    <!-- Vista de Detalle de Publicación -->
+    <!-- VISTA DETALLE -->
     <div id="view-detail" class="hidden fade-in">
-        <div class="container mx-auto px-6 py-12 max-w-4xl">
-            <button id="btn-back-to-list" class="text-ocre uppercase text-[10px] font-bold tracking-[0.2em] mb-8 flex items-center gap-2 hover:text-bordo transition-colors">
-                &larr; Volver a publicaciones recientes
-            </button>
-            
-            <article id="single-post-content" class="bg-white border border-stone-200 shadow-sm p-8 md:p-12 mb-12">
-                <!-- Dinámico -->
-            </article>
+        <div class="container mx-auto px-6 py-12 max-w-3xl">
+            <button id="btn-back-to-list" class="btn-back">&#8592; Volver a publicaciones recientes</button>
 
-            <section class="bg-stone-50 border border-stone-200 p-8">
-                <h3 class="text-2xl font-bold text-bordo italic mb-6">Comentarios y Consultas</h3>
-                
-                <form id="commentForm" class="mb-10 space-y-4">
-                    <input type="text" id="comment-name" placeholder="Tu nombre completo" class="w-full border border-stone-200 p-4 outline-none focus:border-ocre bg-white shadow-sm" required>
-                    <textarea id="comment-text" rows="3" placeholder="Escribe aquí tu consulta o comentario..." class="w-full border border-stone-200 p-4 outline-none focus:border-ocre bg-white shadow-sm" required></textarea>
-                    
-                    <div class="flex justify-end">
-                        <button type="submit" id="btn-submit-comment" class="bg-bordo text-white px-8 py-4 uppercase tracking-[0.2em] font-bold text-[10px] hover:bg-stone-800 transition-all shadow-md flex items-center gap-3">
+            <article id="single-post-content" class="single-article" style="margin-bottom:2rem;"></article>
+
+            <!-- COMENTARIOS -->
+            <section class="comments-section">
+                <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;font-style:italic;color:var(--burgundy);margin-bottom:0.5rem;">Comentarios y Consultas</h3>
+                <div style="width:32px;height:1px;background:var(--gold);margin-bottom:1.75rem;"></div>
+
+                <form id="commentForm" style="display:flex;flex-direction:column;gap:1rem;margin-bottom:2.5rem;">
+                    <input type="text" id="comment-name" placeholder="Tu nombre completo" class="comment-form-input" required>
+                    <textarea id="comment-text" rows="3" placeholder="Escribe aquí tu consulta o comentario..." class="comment-form-input" style="resize:none;" required></textarea>
+                    <div style="display:flex;justify-content:flex-end;">
+                        <button type="submit" id="btn-submit-comment" class="btn-comment">
                             Enviar Comentario
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>
                         </button>
                     </div>
                 </form>
 
-                <div id="comments-container" class="space-y-6">
-                    <!-- Dinámico -->
-                </div>
+                <div id="comments-container" style="display:flex;flex-direction:column;gap:0.75rem;"></div>
             </section>
         </div>
     </div>
 
-    <!-- Botón Flotante Admin -->
-    <button id="btn-publish-float" class="hidden btn-float bg-ocre text-white px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 hover:bg-bordo hover:scale-105 transition-all duration-300">
-        <span class="text-xs uppercase font-bold tracking-widest">Nueva Publicación</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <!-- BOTÓN FLOTANTE ADMIN -->
+    <button id="btn-publish-float" class="btn-float-pub">
+        Nueva Publicación
+        <svg xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
     </button>
 
-    <footer class="bg-stone-100 py-12 text-center border-t border-stone-200 mt-20">
-        <p class="text-stone-500 text-[10px] uppercase tracking-widest">&copy; 2026 Badaloni Mombelli & Fiori . Información de Acceso Público</p>
+    <footer class="site-footer" style="padding:2.5rem;text-align:center;margin-top:5rem;">
+        <p style="font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.25);">&copy; 2026 Badaloni Mombelli & Fiori · Información de Acceso Público</p>
     </footer>
 
     <script type="module">
@@ -178,7 +439,7 @@
             if (!text) return "";
             return text
                 .replace(/\*(.*?)\*/g, '<strong class="font-bold text-black">$1</strong>')
-                .replace(/\[(.*?)\]/g, '<span class="highlight text-ocre italic font-semibold">$1</span>');
+                .replace(/\[(.*?)\]/g, '<span class="highlight" style="color:var(--gold);font-style:italic;font-weight:500;">$1</span>');
         }
 
         function showView(viewId) {
@@ -193,21 +454,21 @@
             const btnAdd = document.getElementById('btn-add-post-main');
             const btnFloat = document.getElementById('btn-publish-float');
             const authStatus = document.getElementById('admin-auth-status');
-            
+
             if (isAdmin) {
-                btnAdd?.classList.remove('hidden');
-                btnFloat?.classList.remove('hidden');
-                authStatus.innerHTML = `<span class="text-[10px] uppercase font-bold tracking-widest text-bordo">Panel de Administración</span>`;
+                btnAdd?.classList.add('visible');
+                btnFloat?.classList.add('visible');
+                authStatus.innerHTML = `<span style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--burgundy);font-weight:600;">Panel de Administración</span>`;
             } else {
-                btnAdd?.classList.add('hidden');
-                btnFloat?.classList.add('hidden');
+                btnAdd?.classList.remove('visible');
+                btnFloat?.classList.remove('visible');
             }
         });
 
         document.getElementById('btn-add-post-main').onclick = () => document.getElementById('admin-section').classList.toggle('hidden');
         document.getElementById('btn-publish-float').onclick = () => {
             document.getElementById('admin-section').classList.remove('hidden');
-            document.getElementById('admin-section').scrollIntoView({behavior: 'smooth'});
+            document.getElementById('admin-section').scrollIntoView({ behavior: 'smooth' });
         };
         document.getElementById('close-admin').onclick = () => document.getElementById('admin-section').classList.add('hidden');
 
@@ -215,9 +476,7 @@
             e.preventDefault();
             if (!isAdmin) return;
             const btn = e.target.querySelector('button');
-            btn.disabled = true;
-            btn.innerText = "PROCESANDO...";
-
+            btn.disabled = true; btn.innerText = "PROCESANDO...";
             try {
                 await addDoc(collection(db, 'publicaciones'), {
                     serviceId,
@@ -229,12 +488,8 @@
                 });
                 e.target.reset();
                 document.getElementById('admin-section').classList.add('hidden');
-            } catch (err) {
-                alert("Error: " + err.message);
-            } finally {
-                btn.disabled = false;
-                btn.innerText = "Publicar";
-            }
+            } catch (err) { alert("Error: " + err.message); }
+            finally { btn.disabled = false; btn.innerText = "Publicar"; }
         };
 
         const qPosts = query(collection(db, 'publicaciones'), where("serviceId", "==", serviceId));
@@ -242,31 +497,30 @@
             const container = document.getElementById('posts-container');
             container.innerHTML = '';
             if (snap.empty) {
-                container.innerHTML = `<div class="col-span-full py-10 text-stone-400 italic text-center">Sin publicaciones recientes en esta sección.</div>`;
+                container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:5rem 0;color:var(--muted);font-style:italic;font-size:0.875rem;font-weight:300;">Sin publicaciones recientes en esta sección.</div>`;
                 return;
             }
             snap.forEach((docSnap) => {
                 const post = docSnap.data();
                 const id = docSnap.id;
                 const card = document.createElement('article');
-                card.className = "bg-white border border-stone-200 group overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col relative";
+                card.className = "post-card";
+                card.style.position = 'relative';
                 card.innerHTML = `
-                    <div class="h-56 overflow-hidden bg-stone-100 cursor-pointer" onclick="openPost('${id}')">
-                        <img src="${post.imagen}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400'">
+                    <div class="post-card-img" onclick="openPost('${id}')">
+                        <img src="${post.imagen}" alt="${post.titulo}" onerror="this.src='https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400'">
                     </div>
-                    ${isAdmin ? `<button onclick="deletePost('${id}')" class="absolute top-2 right-2 bg-red-600 text-white w-8 h-8 rounded-full shadow-md z-10 hover:bg-red-800 transition-colors">&times;</button>` : ''}
-                    <div class="p-6 flex-grow">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-[9px] uppercase tracking-widest text-ocre font-bold">${post.autor}</span>
-                            <span class="text-[9px] text-stone-400 font-bold">${post.fecha ? new Date(post.fecha.seconds * 1000).toLocaleDateString() : 'Pendiente'}</span>
+                    ${isAdmin ? `<button onclick="deletePost('${id}')" class="btn-delete">&times;</button>` : ''}
+                    <div class="post-card-body">
+                        <div class="post-meta">
+                            <span class="post-author">${post.autor}</span>
+                            <span class="post-date">${post.fecha ? new Date(post.fecha.seconds * 1000).toLocaleDateString('es-AR') : 'Pendiente'}</span>
                         </div>
-                        <h3 class="text-xl font-bold text-bordo mb-3 leading-tight cursor-pointer hover:text-ocre transition-colors" onclick="openPost('${id}')">${post.titulo}</h3>
-                        <div class="rich-text text-sm text-stone-600 line-clamp-4 leading-relaxed mb-4">
-                            ${formatRichText(post.contenido)}
-                        </div>
+                        <h3 class="post-title-card" onclick="openPost('${id}')">${post.titulo}</h3>
+                        <div class="post-excerpt rich-text">${formatRichText(post.contenido)}</div>
                     </div>
-                    <div class="px-6 pb-6">
-                        <button onclick="openPost('${id}')" class="text-ocre text-[10px] uppercase font-bold tracking-[0.15em] border-b-2 border-ocre/30 pb-1 hover:border-bordo hover:text-bordo transition-all">Leer Publicación Completa</button>
+                    <div class="post-card-footer">
+                        <button class="btn-read" onclick="openPost('${id}')">Leer publicación completa →</button>
                     </div>
                 `;
                 container.appendChild(card);
@@ -285,14 +539,13 @@
                 if (!snap.exists()) { showView('view-list'); return; }
                 const post = snap.data();
                 document.getElementById('single-post-content').innerHTML = `
-                    <div class="mb-10 text-center">
-                        <span class="text-[10px] uppercase tracking-[0.3em] text-ocre font-bold">${post.autor} | ${post.fecha ? new Date(post.fecha.seconds * 1000).toLocaleDateString() : ''}</span>
-                        <h1 class="text-4xl md:text-5xl font-bold text-bordo italic mt-4 leading-tight">${post.titulo}</h1>
+                    <p class="article-eyebrow">${post.autor} &nbsp;·&nbsp; ${post.fecha ? new Date(post.fecha.seconds * 1000).toLocaleDateString('es-AR') : ''}</p>
+                    <h1 class="article-title">${post.titulo}</h1>
+                    <div class="article-divider"></div>
+                    <div class="article-img-wrap">
+                        <img src="${post.imagen}" alt="${post.titulo}" onerror="this.style.display='none'">
                     </div>
-                    <div class="mb-12 border-y border-stone-100 py-2">
-                         <img src="${post.imagen}" class="w-full h-auto max-h-[500px] object-cover shadow-sm border border-stone-100" onerror="this.style.display='none'">
-                    </div>
-                    <div class="rich-text text-lg text-stone-700 leading-relaxed space-y-6">
+                    <div class="article-body rich-text">
                         ${formatRichText(post.contenido).split('\n').join('<br>')}
                     </div>
                 `;
@@ -304,29 +557,26 @@
         async function loadComments(postId) {
             const container = document.getElementById('comments-container');
             const q = query(collection(db, 'publicaciones', postId, 'comentarios'), orderBy("fecha", "desc"));
-            
             onSnapshot(q, (snap) => {
                 container.innerHTML = '';
                 if (snap.empty) {
-                    container.innerHTML = `<p class="text-stone-400 italic text-sm text-center py-4">No hay consultas registradas aún.</p>`;
+                    container.innerHTML = `<p style="color:var(--muted);font-style:italic;font-size:0.8rem;text-align:center;padding:1rem 0;">No hay consultas registradas aún.</p>`;
                     return;
                 }
                 snap.forEach(d => {
                     const c = d.data();
                     const item = document.createElement('div');
-                    item.className = "bg-white border-l-4 border-ocre p-5 shadow-sm rounded-r-sm fade-in";
+                    item.className = "comment-item fade-in";
                     item.innerHTML = `
-                        <div class="flex justify-between items-start mb-2">
-                            <p class="font-bold text-bordo text-xs uppercase tracking-wider">${c.nombre}</p>
-                            <p class="text-[9px] text-stone-400 uppercase font-bold">${c.fecha ? new Date(c.fecha.seconds * 1000).toLocaleDateString() : 'Enviando...'}</p>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+                            <p class="comment-author">${c.nombre}</p>
+                            <p class="comment-date">${c.fecha ? new Date(c.fecha.seconds * 1000).toLocaleDateString('es-AR') : 'Enviando...'}</p>
                         </div>
-                        <p class="text-stone-700 text-sm italic leading-relaxed">"${c.texto}"</p>
+                        <p class="comment-text">"${c.texto}"</p>
                     `;
                     container.appendChild(item);
                 });
-            }, (err) => {
-                console.log("Esperando reglas de subcolección...");
-            });
+            }, (err) => { console.log("Esperando reglas de subcolección..."); });
         }
 
         document.getElementById('commentForm').onsubmit = async (e) => {
@@ -334,27 +584,21 @@
             const btn = document.getElementById('btn-submit-comment');
             const nombre = document.getElementById('comment-name').value;
             const texto = document.getElementById('comment-text').value;
-            
-            btn.disabled = true;
-            btn.innerText = "ENVIANDO...";
-
+            btn.disabled = true; btn.innerText = "ENVIANDO...";
             try {
                 await addDoc(collection(db, 'publicaciones', currentPostId, 'comentarios'), {
-                    nombre,
-                    texto,
-                    fecha: serverTimestamp()
+                    nombre, texto, fecha: serverTimestamp()
                 });
                 e.target.reset();
             } catch (err) {
                 alert("Error al enviar: Asegúrate de que las reglas de Firebase permitan escribir en subcolecciones.");
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = `Enviar Comentario <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>`;
+                btn.innerHTML = `Enviar Comentario <svg xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>`;
             }
         };
 
         document.getElementById('btn-back-to-list').onclick = () => showView('view-list');
-
     </script>
 </body>
 </html>
