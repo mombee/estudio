@@ -385,14 +385,7 @@
         </div>
     </div>
 
-    <!-- BOTÓN FLOTANTE ADMIN -->
-    <button id="btn-publish-float" class="btn-float-pub">
-        Nueva Publicación
-        <svg xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-        </svg>
-    </button>
-
+  
     <footer class="site-footer" style="padding:2.5rem;text-align:center;margin-top:5rem;">
         <p style="font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.25);">&copy; 2026 Badaloni Mombelli & Fiori · Información de Acceso Público</p>
     </footer>
@@ -450,26 +443,19 @@
         }
 
         onAuthStateChanged(auth, (user) => {
-            isAdmin = user && !user.isAnonymous;
-            const btnAdd = document.getElementById('btn-add-post-main');
-            const btnFloat = document.getElementById('btn-publish-float');
-            const authStatus = document.getElementById('admin-auth-status');
+    isAdmin = user && !user.isAnonymous;
+    const btnAdd = document.getElementById('btn-add-post-main');
+    const authStatus = document.getElementById('admin-auth-status');
 
-            if (isAdmin) {
-                btnAdd?.classList.add('visible');
-                btnFloat?.classList.add('visible');
-                authStatus.innerHTML = `<span style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--burgundy);font-weight:600;">Panel de Administración</span>`;
-            } else {
-                btnAdd?.classList.remove('visible');
-                btnFloat?.classList.remove('visible');
-            }
-        });
+    if (isAdmin) {
+        btnAdd?.classList.add('visible');
+        authStatus.innerHTML = `<span style="font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--burgundy);font-weight:600;">Panel de Administración</span>`;
+    } else {
+        btnAdd?.classList.remove('visible');
+    }
+});
 
         document.getElementById('btn-add-post-main').onclick = () => document.getElementById('admin-section').classList.toggle('hidden');
-        document.getElementById('btn-publish-float').onclick = () => {
-            document.getElementById('admin-section').classList.remove('hidden');
-            document.getElementById('admin-section').scrollIntoView({ behavior: 'smooth' });
-        };
         document.getElementById('close-admin').onclick = () => document.getElementById('admin-section').classList.add('hidden');
 
         document.getElementById('postForm').onsubmit = async (e) => {
@@ -599,6 +585,15 @@
         };
 
         document.getElementById('btn-back-to-list').onclick = () => showView('view-list');
-    </script>
+    </script><!-- BOTÓN FLOTANTE DE WHATSAPP -->
+<a href="https://wa.me/5491138466930?text=Hola,%20vengo%20de%20la%20página%20web%20y%20necesito%20hacer%20una%20consulta%20legal." 
+   class="btn-whatsapp-float" 
+   target="_blank" 
+   style="position:fixed; bottom:20px; right:20px; background-color:#25d366; color:white; border-radius:50px; width:60px; height:60px; display:flex; justify-content:center; align-items:center; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); z-index:9999;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.948h.003c4.368 0 7.926-3.554 7.93-7.92a7.9 7.9 0 0 0-2.326-5.594zm-5.607 11.366A6.57 6.57 0 0 1 4.8 12.634l-.25-.15-2.492.654.666-2.433-.165-.262A6.57 6.57 0 0 1 1.6 7.93c.004-3.629 2.953-6.579 6.58-6.579a6.58 6.58 0 0 1 4.76 2.01 6.58 6.58 0 0 1 1.832 4.71c-.003 3.63-2.952 6.579-6.58 6.579zm3.446-4.17c-.19-.095-1.12-.553-1.293-.617-.173-.064-.3-.095-.426.095-.127.192-.49.617-.6.73-.11.114-.223.127-.414.031-.19-.095-.8-.294-1.524-.942-.564-.503-.944-1.124-1.055-1.314-.112-.19-.012-.294.082-.389.086-.085.19-.223.284-.335.095-.112.127-.19.19-.32s.031-.247-.015-.341c-.046-.094-.426-1.027-.584-1.41-.154-.373-.31-.322-.426-.322-.11 0-.236-.013-.363-.013s-.331.048-.503.236c-.172.188-.657.642-.657 1.567s.672 1.82 1.766 2.952c1.094 1.132 2.152 1.731 3.393 2.27 1.242.538 1.4.43 1.636.397.236-.033.723-.295.824-.582.102-.288.102-.534.072-.582-.03-.048-.11-.095-.3-.19z"/>
+    </svg>
+</a>
+
 </body>
 </html>

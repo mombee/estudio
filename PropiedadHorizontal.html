@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propiedad Horizontal | Estudio Badaloni Mombelli & Fiori</title>
+    <!-- Tailwind CSS para layouts rápidos y fluidos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fuentes premium de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --burgundy: #4a0519;
+            --burgundy-light: #6b0c2a;
+            --gold: #c9a84c;
+            --gold-light: #dfc57a;
+            --charcoal: #212121;
+            --muted: #666666;
+            --bg-cream: #fbf9f6;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--charcoal);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .serif-font {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Estilo Header Minimalista */
+        .site-header {
+            border-bottom: 1px solid rgba(76, 5, 25, 0.08);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+        }
+
+        /* Hero adaptado a conversión móvil */
+        .hero-section {
+            background: linear-gradient(135deg, #2a0310 0%, #120106 100%);
+            position: relative;
+        }
+
+        .hero-pattern {
+            background-image: radial-gradient(rgba(201, 168, 76, 0.15) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        /* Estilos de botones premium */
+        .btn-primary-gold {
+            background-color: var(--gold);
+            color: var(--charcoal);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid var(--gold);
+        }
+
+        .btn-primary-gold:hover {
+            background-color: transparent;
+            color: var(--gold);
+            box-shadow: 0 10px 20px rgba(201, 168, 76, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary-outline {
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary-outline:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: white;
+        }
+
+        /* Acordeón de Preguntas Frecuentes */
+        .faq-trigger {
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+        }
+        .faq-item.active .faq-content {
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Estilos de inputs de formulario */
+        .input-premium {
+            width: 100%;
+            border-bottom: 1px solid rgba(33, 33, 33, 0.2);
+            background: transparent;
+            padding: 0.75rem 0.25rem;
+            font-size: 0.95rem;
+            font-weight: 300;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-premium:focus {
+            outline: none;
+            border-color: var(--burgundy);
+        }
+
+        /* Animaciones */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Pulsación sutil en WhatsApp flotante */
+        @keyframes pulse-whatsapp {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        .pulse-wa {
+            animation: pulse-whatsapp 2s infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV MINIMALISTA -->
+    <header class="site-header sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 flex items-center justify-center overflow-hidden">
+                   <img src="logoo1.png" alt="Logo" class="w-full h-full object-cover" onerror="this.style.display='none'">
+                </div>
+                <span class="text-xs uppercase tracking-wider font-semibold text-[var(--charcoal)]">
+                    Badaloni Mombelli <span style="color:var(--gold)">&</span> Fiori
+                </span>
+            </div>
+            <a href="https://wa.me/5491158040556?text=Hola%20Estudio%20Badaloni%20Mombelli%20Fiori,%20quisiera%20hacer%20una%20consulta%20urgente%20por%20un%20inconveniente%20de%20Propiedad%20Horizontal%20o%20Consorcio." 
+               class="text-xs font-semibold tracking-widest uppercase text-[var(--burgundy)] hover:text-[var(--gold)] transition-colors duration-300">
+                Consulta Urgente
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION (Enfoque en propiedad horizontal y consorcios en Buenos Aires) -->
+    <section class="hero-section text-white py-16 md:py-28 relative overflow-hidden">
+        <div class="absolute inset-0 hero-pattern opacity-40"></div>
+        <div class="container mx-auto px-6 relative z-10 max-w-5xl">
+            <div class="flex flex-col items-center text-center">
+                <span class="text-xs uppercase tracking-widest font-medium text-[var(--gold-light)] mb-4 block">Abogadas Especialistas en Consorcios</span>
+                <h1 class="text-4xl md:text-6xl font-light leading-tight mb-6" style="letter-spacing: -0.01em;">
+                     Propiedad <span class="italic font-normal text-[var(--gold-light)]">Horizontal</span> <br>En Buenos Aires
+                </h1>
+                <div class="w-20 h-[1px] bg-[var(--gold)] mb-6"></div>
+                <p class="text-base md:text-lg font-light text-gray-300 max-w-2xl leading-relaxed mb-10">
+                    Defendemos sus derechos patrimoniales y de convivencia. Brindamos soluciones legales rápidas y estratégicas ante expensas indebidas, filtraciones sin reparar, asambleas irregulares y abusos de administración.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                    <a href="https://wa.me/5491158040556?text=Hola,%20quisiera%20hacer%20una%20consulta%20por%20un%20problema%20en%20mi%20consorcio%20o%20propiedad%20horizontal." 
+                       class="btn-primary-gold px-8 py-4 rounded text-xs text-center flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.863-9.864.001-2.63-1.023-5.102-2.884-6.964C16.588 1.843 14.116.82 11.485.82 6.05.82 1.624 5.245 1.622 10.688c-.001 1.67.439 3.3 1.272 4.757l-.991 3.616 3.744-.981zm11.367-6.862c-.29-.146-1.72-.849-1.985-.945-.266-.096-.46-.144-.653.146-.192.291-.746.945-.913 1.139-.167.194-.334.219-.624.073-.29-.147-1.224-.451-2.33-1.436-.86-.766-1.44-1.714-1.609-2.006-.169-.29-.018-.448.128-.593.13-.13.29-.34.435-.51.145-.17.193-.291.29-.485.097-.194.048-.364-.024-.51-.073-.146-.653-1.576-.895-2.158-.236-.569-.475-.492-.653-.501-.17-.008-.364-.01-.557-.01-.193 0-.507.073-.77.364-.263.292-1.003.98-1.003 2.387 0 1.407 1.025 2.766 1.168 2.96.145.19 2.017 3.081 4.886 4.318.682.293 1.214.469 1.629.6.685.218 1.31.187 1.805.113.552-.082 1.72-.703 1.962-1.382.242-.678.242-1.261.17-1.382-.072-.12-.265-.194-.555-.34z"/>
+                        </svg>
+                        Consultar por WhatsApp
+                    </a>
+                    <a href="#contacto" class="btn-secondary-outline px-8 py-4 rounded text-xs text-center flex items-center justify-center">
+                        Formulario de Contacto
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROPUESTAS CLAVE (Confianza, Especialidad y Urgencia) -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="flex flex-col items-center md:items-start text-center md:text-left reveal">
+                    <span class="text-3xl text-[var(--gold)] font-light mb-4 serif-font">I</span>
+                    <h3 class="text-xl font-medium mb-2 text-[var(--burgundy)]">Reclamos Rápidos y Efectivos</h3>
+                    <p class="text-sm text-[var(--muted)] leading-relaxed">
+                        Accionamos judicial y extrajudicialmente con rapidez por filtraciones, humedades, rajaduras y roturas estructurales que afecten la habitabilidad de su unidad.
+                    </p>
+                </div>
+                <div class="flex flex-col items-center md:items-start text-center md:text-left reveal" style="transition-delay: 0.1s">
+                    <span class="text-3xl text-[var(--gold)] font-light mb-4 serif-font">II</span>
+                    <h3 class="text-xl font-medium mb-2 text-[var(--burgundy)]">Impugnación de Expensas</h3>
+                    <p class="text-sm text-[var(--muted)] leading-relaxed">
+                        Controlamos y auditamos liquidaciones sospechosas, expensas extraordinarias mal imputadas, asambleas nulas y liquidaciones fuera del reglamento.
+                    </p>
+                </div>
+                <div class="flex flex-col items-center md:items-start text-center md:text-left reveal" style="transition-delay: 0.2s">
+                    <span class="text-3xl text-[var(--gold)] font-light mb-4 serif-font">III</span>
+                    <h3 class="text-xl font-medium mb-2 text-[var(--burgundy)]">Defensa de Co-propietarios</h3>
+                    <p class="text-sm text-[var(--muted)] leading-relaxed">
+                        Le otorgamos respaldo legal estratégico frente a ruidos molestos reiterados, abusos de poder de la administración y reglamentos internos obsoletos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PREGUNTAS FRECUENTES (Resuelve dudas sin que el cliente abandone la página) -->
+    <section class="py-20 bg-[#f4f0e9]">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <div class="text-center mb-12 reveal">
+                <p class="text-xs uppercase tracking-widest text-[var(--gold)] mb-2">Despeje sus inquietudes de consorcio</p>
+                <h2 class="text-3xl md:text-4xl text-[var(--burgundy)]">Dudas comunes sobre Propiedad Horizontal</h2>
+                <div class="w-12 h-[1px] bg-[var(--gold)] mx-auto mt-4"></div>
+            </div>
+
+            <div class="space-y-4 reveal">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item bg-white p-6 rounded shadow-sm border border-gray-100 transition-all duration-300">
+                    <div class="faq-trigger flex justify-between items-center" onclick="toggleFaq(this)">
+                        <h3 class="text-base md:text-lg font-medium text-[var(--charcoal)] pr-4">¿Quién debe pagar las reparaciones por filtraciones de cañerías comunes?</h3>
+                        <span class="faq-icon text-[var(--gold)] text-xl font-light transform transition-transform duration-300">&#9662;</span>
+                    </div>
+                    <div class="faq-content">
+                        <p class="text-sm text-[var(--muted)] pt-4 leading-relaxed border-t border-gray-50 mt-4">
+                            Según el Código Civil y Comercial, las cañerías que atraviesan los muros o corren por debajo de los suelos suelen considerarse bienes comunes de uso exclusivo o directamente partes comunes del edificio. En consecuencia, **el consorcio debe hacerse cargo** del costo total del arreglo, pintura e indemnización de daños si la filtración se originó en una cañería común o por fallas estructurales del edificio.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item bg-white p-6 rounded shadow-sm border border-gray-100 transition-all duration-300">
+                    <div class="faq-trigger flex justify-between items-center" onclick="toggleFaq(this)">
+                        <h3 class="text-base md:text-lg font-medium text-[var(--charcoal)] pr-4">¿Se puede remover a una administración ineficiente o con sospecha de fraude?</h3>
+                        <span class="faq-icon text-[var(--gold)] text-xl font-light transform transition-transform duration-300">&#9662;</span>
+                    </div>
+                    <div class="faq-content">
+                        <p class="text-sm text-[var(--muted)] pt-4 leading-relaxed border-t border-gray-50 mt-4">
+                            Sí. El administrador de consorcio es un mandatario y su mandato puede ser revocado por decisión de la asamblea de copropietarios conforme al Reglamento de Propiedad Horizontal y las mayorías legales. Si hay sospechas fundadas de irregularidades contables o falta de transparencia, se puede intimar por carta documento y forzar el llamado a una asamblea extraordinaria para su remoción e inicio de auditorías.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item bg-white p-6 rounded shadow-sm border border-gray-100 transition-all duration-300">
+                    <div class="faq-trigger flex justify-between items-center" onclick="toggleFaq(this)">
+                        <h3 class="text-base md:text-lg font-medium text-[var(--charcoal)] pr-4">¿Qué plazo legal existe para impugnar una asamblea del consorcio?</h3>
+                        <span class="faq-icon text-[var(--gold)] text-xl font-light transform transition-transform duration-300">&#9662;</span>
+                    </div>
+                    <div class="faq-content">
+                        <p class="text-sm text-[var(--muted)] pt-4 leading-relaxed border-t border-gray-50 mt-4">
+                            Si una asamblea se convocó sin respetar el reglamento, no alcanzó los quórums exigidos o resolvió temas no incluidos en el orden del día, los propietarios afectados pueden proponer su nulidad. El plazo general de prescripción de la acción para demandar la nulidad de una decisión asamblearia es de **30 días** desde que se celebró o se notificó el acta correspondiente. Por esta razón, la celeridad jurídica de un equipo de abogadas es indispensable.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EL EQUIPO DETRÁS DEL ESTUDIO (Generación de Confianza) -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="flex flex-col md:flex-row items-center gap-12 reveal">
+                <div class="w-full md:w-5/12">
+                    <img src="logoo1.png" 
+                         alt="Fachada Edificio y Consorcios de Alta Gama" 
+                         class="rounded shadow-xl w-full h-auto object-cover max-h-[380px]"
+                         style="object-position: center 20%;"
+                         onerror="this.src='https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80'">
+                </div>
+                <div class="w-full md:w-7/12">
+                    <p class="text-xs uppercase tracking-widest text-[var(--gold)] mb-2">Respaldo de trayectoria patrimonial</p>
+                    <h2 class="text-3xl text-[var(--burgundy)] mb-4">Badaloni Mombelli & Fiori</h2>
+                    <p class="text-sm text-[var(--muted)] leading-relaxed mb-4">
+                        Nuestro estudio cuenta con una trayectoria de excelencia abocada al Derecho de Propiedad Horizontal y Civil. Creemos firmemente que el hogar o la inversión inmobiliaria representan una parte fundamental de su esfuerzo y estabilidad familiar.
+                    </p>
+                    <p class="text-sm text-[var(--muted)] leading-relaxed">
+                        Entendemos la dinámica interna de las administraciones en CABA y Gran Buenos Aires. Abordamos cada asamblea irregular, reclamo por daños o expensas indebidas con estrategias procesales dinámicas, asertivas y adaptadas al nuevo paradigma jurídico digital argentino.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULARIO DE CONSULTA PRIVADO Y SEGURO -->
+    <section id="contacto" class="py-20 bg-white border-t border-gray-100">
+        <div class="container mx-auto px-6 max-w-xl">
+            <div class="text-center mb-10 reveal">
+                <p class="text-xs uppercase tracking-widest text-[var(--gold)] mb-2">Consulta Profesional de Consorcios</p>
+                <h2 class="text-3xl text-[var(--burgundy)]">Envíenos un mensaje privado</h2>
+                <p class="text-xs text-[var(--muted)] mt-2">Su información civil, inmobiliaria y personal estará procesada bajo el secreto profesional de la ley argentina.</p>
+            </div>
+
+            <form id="landingContactForm" class="space-y-6 reveal" onsubmit="return false;">
+                <div>
+                    <label class="text-[9px] uppercase tracking-wider text-[var(--muted)] font-medium">Nombre y Apellido</label>
+                    <input type="text" id="landingNombre" placeholder="Ej. Carlos Rossi" class="input-premium" required>
+                </div>
+                <div>
+                    <label class="text-[9px] uppercase tracking-wider text-[var(--muted)] font-medium">Teléfono / WhatsApp</label>
+                    <input type="tel" id="landingTelefono" placeholder="Ej. 11 3846-6930" class="input-premium" required>
+                </div>
+                <div>
+                    <label class="text-[9px] uppercase tracking-wider text-[var(--muted)] font-medium">Correo Electrónico</label>
+                    <input type="email" id="landingEmail" placeholder="ejemplo@correo.com" class="input-premium" required>
+                </div>
+                <div>
+                    <label class="text-[9px] uppercase tracking-wider text-[var(--muted)] font-medium">Describa el inconveniente en su consorcio (Ej: filtración sin reparar, expensas abusivas, ruidos...)</label>
+                    <textarea id="landingMensaje" rows="3" placeholder="Ej: La administración no repara el techo común que gotea en mi living, o cobró expensas extraordinarias de manera irregular..." class="input-premium" style="resize:none;" required></textarea>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" id="landingSubmitBtn" class="w-full btn-primary-gold py-4 rounded text-xs">
+                        Enviar Consulta Segura
+                    </button>
+                    <p id="landingSuccessMsg" class="hidden text-center text-xs font-semibold text-emerald-700 mt-4 tracking-wider">
+                        CONSULTA RECIBIDA. Nos comunicaremos a la brevedad.
+                    </p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- MODAL DE MENSAJE PERSONALIZADO (Evita usar alert) -->
+    <div id="errorModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+        <div class="bg-white p-6 rounded-lg max-w-sm w-full text-center shadow-2xl border border-gray-100">
+            <h3 class="text-lg font-semibold text-rose-800 mb-2">Interrupción de Servidor</h3>
+            <p class="text-sm text-[var(--muted)] mb-6">Hubo un inconveniente para conectar de forma automática. Por favor, intente enviar el formulario nuevamente o contáctenos de forma directa presionando el botón de WhatsApp.</p>
+            <button onclick="closeErrorModal()" class="btn-primary-gold px-6 py-2 rounded text-xs">Entendido</button>
+        </div>
+    </div>
+
+    <!-- FOOTER MÍNIMO DE SEGURIDAD JURÍDICA -->
+    <footer class="bg-[#120106] text-gray-500 py-10 text-center text-xs">
+        <div class="container mx-auto px-6">
+            <p class="tracking-widest uppercase text-[9px] text-gray-600 mb-2">
+                &copy; 2026 Badaloni Mombelli & Fiori · Abogadas Especialistas en Propiedad Horizontal
+            </p>
+            <p class="text-[10px] text-gray-600">
+                Lima 29 2º Piso, Ciudad Autónoma de Buenos Aires.
+            </p>
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP CON PULSACIÓN -->
+    <a href="https://wa.me/5491158040556?text=Hola,%20vengo%20de%20la%20página%20de%20Propiedad%20Horizontal%20y%20necesito%20hacer%20una%20consulta%20urgente." 
+       class="pulse-wa"
+       target="_blank" 
+       style="position:fixed; bottom:24px; right:24px; background-color:#25d366; color:white; border-radius:50px; width:64px; height:64px; display:flex; justify-content:center; align-items:center; box-shadow: 2px 2px 12px rgba(0,0,0,0.4); z-index:9999;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.948h.003c4.368 0 7.926-3.554 7.93-7.92a7.9 7.9 0 0 0-2.326-5.594zm-5.607 11.366A6.57 6.57 0 0 1 4.8 12.634l-.25-.15-2.492.654.666-2.433-.165-.262A6.57 6.57 0 0 1 1.6 7.93c.004-3.629 2.953-6.579 6.58-6.579a6.58 6.58 0 0 1 4.76 2.01 6.58 6.58 0 0 1 1.832 4.71c-.003 3.63-2.952 6.579-6.58 6.579zm3.446-4.17c-.19-.095-1.12-.553-1.293-.617-.173-.064-.3-.095-.426.095-.127.192-.49.617-.6.73-.11.114-.223.127-.414.031-.19-.095-.8-.294-1.524-.942-.564-.503-.944-1.124-1.055-1.314-.112-.19-.012-.294.082-.389.086-.085.19-.223.284-.335.095-.112.127-.19.19-.32s.031-.247-.015-.341c-.046-.094-.426-1.027-.584-1.41-.154-.373-.31-.322-.426-.322-.11 0-.236-.013-.363-.013s-.331.048-.503.236c-.172.188-.657.642-.657 1.567s.672 1.82 1.766 2.952c1.094 1.132 2.152 1.731 3.393 2.27 1.242.538 1.4.43 1.636.397.236-.033.723-.295.824-.582.102-.288.102-.534.072-.582-.03-.048-.11-.095-.3-.19z"/>
+        </svg>
+    </a>
+
+    <!-- SCRIPTS INTERACTIVOS -->
+    <script>
+        // Animaciones en el scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        revealElements.forEach(el => scrollObserver.observe(el));
+
+        // Acordeón de FAQs
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Cierra todos los acordeones
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Si no estaba activo, lo abre
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        // Modales sin usar alerts molestos
+        function showErrorModal() {
+            document.getElementById('errorModal').classList.remove('hidden');
+        }
+
+        function closeErrorModal() {
+            document.getElementById('errorModal').classList.add('hidden');
+        }
+    </script>
+
+    <!-- FIREBASE MODULE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDgquI-XLQ_8zKkOXvnIPV8Vq_PViWQQ3E",
+            authDomain: "estudiobadalonimombelli.firebaseapp.com",
+            projectId: "estudiobadalonimombelli",
+            storageBucket: "estudiobadalonimombelli.firebasestorage.app",
+            messagingSenderId: "471462295134",
+            appId: "1:471462295134:web:a7a1fd8ffd99097aa2e6cf",
+            measurementId: "G-3G3M0D15PY"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // Obtener el ID de la app de forma segura desde el entorno o fallback
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'estudiobadalonimombelli';
+
+        const form = document.getElementById('landingContactForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('landingSubmitBtn');
+            const successMsg = document.getElementById('landingSuccessMsg');
+            
+            btn.disabled = true;
+            btn.innerText = "PROCESANDO SU CONSULTA...";
+            successMsg.classList.add('hidden');
+
+            try {
+                // Validación estricta de autenticación segura requerida para Firestore (RULE 3)
+                if (!auth.currentUser) {
+                    await signInAnonymously(auth);
+                }
+
+                // Guardamos la consulta bajo la ruta pública recomendada estricta (RULE 1)
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'consultas'), {
+                    nombre: document.getElementById('landingNombre').value,
+                    telefono: document.getElementById('landingTelefono').value,
+                    email: document.getElementById('landingEmail').value || 'No proporcionado',
+                    mensaje: document.getElementById('landingMensaje').value,
+                    fecha: serverTimestamp(),
+                    origen: "anuncio-propiedad-horizontal", // Permite al estudio distinguir unívocamente el origen de este formulario
+                    leido: false
+                });
+
+                successMsg.classList.remove('hidden');
+                form.reset();
+                btn.innerText = "ENVIADO CORRECTAMENTE";
+                
+                setTimeout(() => {
+                    btn.innerText = "Enviar Consulta Segura";
+                    btn.disabled = false;
+                    successMsg.classList.add('hidden');
+                }, 5000);
+
+            } catch (err) {
+                console.error("Error al enviar a Firebase:", err);
+                btn.innerText = "FALLÓ EL ENVÍO";
+                btn.disabled = false;
+                showErrorModal();
+            }
+        });
+    </script>
+</body>
+</html>
