@@ -83,6 +83,15 @@
             border-color: white;
         }
 
+        .contact-link {
+            color: var(--gold);
+            transition: color 0.25s ease;
+            text-decoration: underline;
+        }
+        .contact-link:hover {
+            color: var(--gold-light);
+        }
+
         /* Acordeón de Preguntas Frecuentes */
         .faq-trigger {
             cursor: pointer;
@@ -129,14 +138,27 @@
             transform: translateY(0);
         }
 
-        /* Pulsación sutil en WhatsApp flotante */
-        @keyframes pulse-whatsapp {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
-            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        /* ── FLOATING GMAIL BUTTON ── */
+        .btn-gmail-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: #ea4335;
+            color: white;
+            border-radius: 50px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 6px 20px rgba(234, 67, 53, 0.4);
+            z-index: 9999;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .pulse-wa {
-            animation: pulse-whatsapp 2s infinite;
+        .btn-gmail-float:hover {
+            transform: scale(1.1);
+            background-color: #d93025;
+            box-shadow: 0 8px 25px rgba(234, 67, 53, 0.6);
         }
     </style>
 </head>
@@ -153,7 +175,7 @@
                     Badaloni Mombelli <span style="color:var(--gold)">&</span> Fiori
                 </span>
             </div>
-            <a href="https://wa.me/5491158040556?text=Hola%20Estudio%20Badaloni%20Mombelli%20Fiori,%20quisiera%20hacer%20una%20consulta%20urgente%20por%20un%20inconveniente%20de%20Propiedad%20Horizontal%20o%20Consorcio." 
+            <a href="mailto:agustinleonel2013@gmail.com?subject=Consulta%20Urgente%20-%20Propiedad%20Horizontal" 
                class="text-xs font-semibold tracking-widest uppercase text-[var(--burgundy)] hover:text-[var(--gold)] transition-colors duration-300">
                 Consulta Urgente
             </a>
@@ -174,12 +196,12 @@
                     Defendemos sus derechos patrimoniales y de convivencia. Brindamos soluciones legales rápidas y estratégicas ante expensas indebidas, filtraciones sin reparar, asambleas irregulares y abusos de administración.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                    <a href="https://wa.me/5491158040556?text=Hola,%20quisiera%20hacer%20una%20consulta%20por%20un%20problema%20en%20mi%20consorcio%20o%20propiedad%20horizontal." 
+                    <a href="mailto:agustinleonel2013@gmail.com?subject=Consulta%20por%20Propiedad%20Horizontal" 
                        class="btn-primary-gold px-8 py-4 rounded text-xs text-center flex items-center justify-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.863-9.864.001-2.63-1.023-5.102-2.884-6.964C16.588 1.843 14.116.82 11.485.82 6.05.82 1.624 5.245 1.622 10.688c-.001 1.67.439 3.3 1.272 4.757l-.991 3.616 3.744-.981zm11.367-6.862c-.29-.146-1.72-.849-1.985-.945-.266-.096-.46-.144-.653.146-.192.291-.746.945-.913 1.139-.167.194-.334.219-.624.073-.29-.147-1.224-.451-2.33-1.436-.86-.766-1.44-1.714-1.609-2.006-.169-.29-.018-.448.128-.593.13-.13.29-.34.435-.51.145-.17.193-.291.29-.485.097-.194.048-.364-.024-.51-.073-.146-.653-1.576-.895-2.158-.236-.569-.475-.492-.653-.501-.17-.008-.364-.01-.557-.01-.193 0-.507.073-.77.364-.263.292-1.003.98-1.003 2.387 0 1.407 1.025 2.766 1.168 2.96.145.19 2.017 3.081 4.886 4.318.682.293 1.214.469 1.629.6.685.218 1.31.187 1.805.113.552-.082 1.72-.703 1.962-1.382.242-.678.242-1.261.17-1.382-.072-.12-.265-.194-.555-.34z"/>
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                         </svg>
-                        Consultar por WhatsApp
+                        Consultar por Gmail
                     </a>
                     <a href="#contacto" class="btn-secondary-outline px-8 py-4 rounded text-xs text-center flex items-center justify-center">
                         Formulario de Contacto
@@ -218,7 +240,7 @@
         </div>
     </section>
 
-    <!-- PREGUNTAS FRECUENTES (Resuelve dudas sin que el cliente abandone la página) -->
+    <!-- PREGUNTAS FRECUENTES -->
     <section class="py-20 bg-[#f4f0e9]">
         <div class="container mx-auto px-6 max-w-3xl">
             <div class="text-center mb-12 reveal">
@@ -262,7 +284,7 @@
                     </div>
                     <div class="faq-content">
                         <p class="text-sm text-[var(--muted)] pt-4 leading-relaxed border-t border-gray-50 mt-4">
-                            Si una asamblea se convocó sin respetar el reglamento, no alcanzó los quórums exigidos o resolvió temas no incluidos en el orden del día, los propietarios afectados pueden proponer su nulidad. El plazo general de prescripción de la acción para demandar la nulidad de una decisión asamblearia es de **30 días** desde que se celebró o se notificó el acta correspondiente. Por esta razón, la celeridad jurídica de un equipo de abogadas es indispensable.
+                            Si una asamblea se convocó sin respetar el reglamento, no alcanzó los quórums exigidos o resolvió temas no incluidos en el orden del día, los propietarios afectados pueden proponer su nulidad. El plazo general de prescripción de la acción para demandar la nulidad de una decisión asamblearia es de **30 días** desde que se celebró o se notified el acta correspondiente. Por esta razón, la celeridad jurídica de un equipo de abogadas es indispensable.
                         </p>
                     </div>
                 </div>
@@ -270,7 +292,7 @@
         </div>
     </section>
 
-    <!-- EL EQUIPO DETRÁS DEL ESTUDIO (Generación de Confianza) -->
+    <!-- EL EQUIPO DETRÁS DEL ESTUDIO -->
     <section class="py-20 bg-white">
         <div class="container mx-auto px-6 max-w-4xl">
             <div class="flex flex-col md:flex-row items-center gap-12 reveal">
@@ -287,8 +309,11 @@
                     <p class="text-sm text-[var(--muted)] leading-relaxed mb-4">
                         Nuestro estudio cuenta con una trayectoria de excelencia abocada al Derecho de Propiedad Horizontal y Civil. Creemos firmemente que el hogar o la inversión inmobiliaria representan una parte fundamental de su esfuerzo y estabilidad familiar.
                     </p>
-                    <p class="text-sm text-[var(--muted)] leading-relaxed">
+                    <p class="text-sm text-[var(--muted)] leading-relaxed mb-4">
                         Entendemos la dinámica interna de las administraciones en CABA y Gran Buenos Aires. Abordamos cada asamblea irregular, reclamo por daños o expensas indebidas con estrategias procesales dinámicas, asertivas y adaptadas al nuevo paradigma jurídico digital argentino.
+                    </p>
+                    <p class="text-sm">
+                        Contacto directo: <a href="mailto:agustinleonel2013@gmail.com" class="contact-link font-medium">agustinleonel2013@gmail.com</a>
                     </p>
                 </div>
             </div>
@@ -310,7 +335,7 @@
                     <input type="text" id="landingNombre" placeholder="Ej. Carlos Rossi" class="input-premium" required>
                 </div>
                 <div>
-                    <label class="text-[9px] uppercase tracking-wider text-[var(--muted)] font-medium">Teléfono / WhatsApp</label>
+                    <label class="text-[9px] uppercase tracking-wider text-[var(--muted)] font-medium">Teléfono de contacto</label>
                     <input type="tel" id="landingTelefono" placeholder="Ej. 11 3846-6930" class="input-premium" required>
                 </div>
                 <div>
@@ -334,11 +359,11 @@
         </div>
     </section>
 
-    <!-- MODAL DE MENSAJE PERSONALIZADO (Evita usar alert) -->
+    <!-- MODAL DE MENSAJE PERSONALIZADO -->
     <div id="errorModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
         <div class="bg-white p-6 rounded-lg max-w-sm w-full text-center shadow-2xl border border-gray-100">
             <h3 class="text-lg font-semibold text-rose-800 mb-2">Interrupción de Servidor</h3>
-            <p class="text-sm text-[var(--muted)] mb-6">Hubo un inconveniente para conectar de forma automática. Por favor, intente enviar el formulario nuevamente o contáctenos de forma directa presionando el botón de WhatsApp.</p>
+            <p class="text-sm text-[var(--muted)] mb-6">Hubo un inconveniente para conectar de forma automática. Por favor, intente enviar el formulario nuevamente o contáctenos de forma directa enviando un correo electrónico.</p>
             <button onclick="closeErrorModal()" class="btn-primary-gold px-6 py-2 rounded text-xs">Entendido</button>
         </div>
     </div>
@@ -355,13 +380,12 @@
         </div>
     </footer>
 
-    <!-- BOTÓN FLOTANTE WHATSAPP CON PULSACIÓN -->
-    <a href="https://wa.me/5491158040556?text=Hola,%20vengo%20de%20la%20página%20de%20Propiedad%20Horizontal%20y%20necesito%20hacer%20una%20consulta%20urgente." 
-       class="pulse-wa"
-       target="_blank" 
-       style="position:fixed; bottom:24px; right:24px; background-color:#25d366; color:white; border-radius:50px; width:64px; height:64px; display:flex; justify-content:center; align-items:center; box-shadow: 2px 2px 12px rgba(0,0,0,0.4); z-index:9999;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.948h.003c4.368 0 7.926-3.554 7.93-7.92a7.9 7.9 0 0 0-2.326-5.594zm-5.607 11.366A6.57 6.57 0 0 1 4.8 12.634l-.25-.15-2.492.654.666-2.433-.165-.262A6.57 6.57 0 0 1 1.6 7.93c.004-3.629 2.953-6.579 6.58-6.579a6.58 6.58 0 0 1 4.76 2.01 6.58 6.58 0 0 1 1.832 4.71c-.003 3.63-2.952 6.579-6.58 6.579zm3.446-4.17c-.19-.095-1.12-.553-1.293-.617-.173-.064-.3-.095-.426.095-.127.192-.49.617-.6.73-.11.114-.223.127-.414.031-.19-.095-.8-.294-1.524-.942-.564-.503-.944-1.124-1.055-1.314-.112-.19-.012-.294.082-.389.086-.085.19-.223.284-.335.095-.112.127-.19.19-.32s.031-.247-.015-.341c-.046-.094-.426-1.027-.584-1.41-.154-.373-.31-.322-.426-.322-.11 0-.236-.013-.363-.013s-.331.048-.503.236c-.172.188-.657.642-.657 1.567s.672 1.82 1.766 2.952c1.094 1.132 2.152 1.731 3.393 2.27 1.242.538 1.4.43 1.636.397.236-.033.723-.295.824-.582.102-.288.102-.534.072-.582-.03-.048-.11-.095-.3-.19z"/>
+    <!-- BOTÓN FLOTANTE GMAIL -->
+    <a href="mailto:agustinleonel2013@gmail.com?subject=Consulta%20Legal%20-%20Propiedad%20Horizontal" 
+       class="btn-gmail-float" 
+       title="Enviar correo a agustinleonel2013@gmail.com">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
         </svg>
     </a>
 
@@ -394,7 +418,6 @@
             }
         }
 
-        // Modales sin usar alerts molestos
         function showErrorModal() {
             document.getElementById('errorModal').classList.remove('hidden');
         }
@@ -424,9 +447,6 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
 
-        // Obtener el ID de la app de forma segura desde el entorno o fallback
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'estudiobadalonimombelli';
-
         const form = document.getElementById('landingContactForm');
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -438,19 +458,17 @@
             successMsg.classList.add('hidden');
 
             try {
-                // Validación estricta de autenticación segura requerida para Firestore (RULE 3)
                 if (!auth.currentUser) {
                     await signInAnonymously(auth);
                 }
 
-                // Guardamos la consulta bajo la ruta pública recomendada estricta (RULE 1)
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'consultas'), {
+                await addDoc(collection(db, 'consultas'), {
                     nombre: document.getElementById('landingNombre').value,
                     telefono: document.getElementById('landingTelefono').value,
                     email: document.getElementById('landingEmail').value || 'No proporcionado',
                     mensaje: document.getElementById('landingMensaje').value,
                     fecha: serverTimestamp(),
-                    origen: "anuncio-propiedad-horizontal", // Permite al estudio distinguir unívocamente el origen de este formulario
+                    origen: "anuncio-propiedad-horizontal",
                     leido: false
                 });
 
